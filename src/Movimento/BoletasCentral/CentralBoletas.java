@@ -1351,7 +1351,7 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             contrato = tblEmails.getModel().getValueAt(modelRow, 0).toString();
             String[][] EmailLocaDados = null;
             try {
-                EmailLocaDados = conn.LerCamposTabela(new String[] {"nome","email"}, "locatarios", "contrato = '" + contrato + "'");
+                EmailLocaDados = conn.LerCamposTabela(new String[] {"nomerazao","email"}, "locatarios", "contrato = '" + contrato + "'");
             } catch (SQLException e) {}
             
             String EmailLoca = null;
@@ -1433,7 +1433,7 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             contrato = tblEmails.getModel().getValueAt(modelRow, 0).toString();
             String[][] EmailLocaDados = null;
             try {
-                EmailLocaDados = conn.LerCamposTabela(new String[] {"nome","email"}, "locatarios", "contrato = '" + contrato + "'");
+                EmailLocaDados = conn.LerCamposTabela(new String[] {"nomerazao","email"}, "locatarios", "contrato = '" + contrato + "'");
             } catch (SQLException e) {}
             
             String EmailLoca = null;
