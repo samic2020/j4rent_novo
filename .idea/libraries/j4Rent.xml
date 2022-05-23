@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="j4Rent">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/j4Rent.jar!/" />
+      <root url="jar://$PROJECT_DIR$/j4Rent_29102021.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

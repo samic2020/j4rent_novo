@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="original_old:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6b6cd607-d291-457b-9f08-877b63e8fecb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Movimento/jRazaoAcumulado_old.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Movimento/jRazaoAcumulado_old.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/j4Rent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/j4Rent.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boleta/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Boleta/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boleta/nbproject/build-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Boleta/nbproject/build-impl.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boleta/nbproject/genfiles.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Boleta/nbproject/genfiles.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boleta/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Boleta/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/j4Rent.aut" beforeDir="false" afterPath="$PROJECT_DIR$/j4Rent.aut" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/j4Rent.conf" beforeDir="false" afterPath="$PROJECT_DIR$/j4Rent.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/build-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/build-impl.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/genfiles.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/genfiles.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2016/Março/10606___carlos Marcelo da Fonseca Pereira Jorge_01-02-2016_015104358-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2016/Outubro/10847_Adelir Vieira dos Santos_08-11-2016_015108890-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2016/Outubro/12226_Sandro Pereira da Silva_16-11-2016_000000033-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2016/Outubro/12804_Norival dos Santos Medeiros_20-11-2016_000000038-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2016/Outubro/12860_Renata Cardoso Avelar_25-11-2016_000000030-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Abril/10335_Breno Tenorio Leite_01-05-2017_000000001-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10012_Osvaldo Gonçalves Dias_17-08-2017_000001537-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10012_Osvaldo Gonçalves Dias_17-08-2017_000001538-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10407_TIAGO FELIX DO NASCIMENTO_01082017_00009042-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10407_TIAGO FELIX DO NASCIMENTO_01082017_00009043-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10407_TIAGO FELIX DO NASCIMENTO_01082017_00009044-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10407_TIAGO FELIX DO NASCIMENTO_01082017_00009045-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10407_TIAGO FELIX DO NASCIMENTO_01082017_00009046-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Agosto/10407_TIAGO FELIX DO NASCIMENTO_01082017_00009047-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Dezembro/12288_A ODONTO CLINICA DE ASSISTENCIA ODONTOLOGICA LTDA_21122017_000001035-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Dezembro/12288_A ODONTO CLINICA DE ASSISTENCIA ODONTOLOGICA LTDA_21122017_000001037-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Fevereiro/12937_Luciana Sampaio de Araujo_01-03-2017_000000254-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Janeiro/10910_Alessandra Targueta_02-09-2016_015108890-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Janeiro/10910_Alessandra Targueta_02-10-2016_015108891-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10296_ABELHA DOCEIRA LTDA_26072017_00008152-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10296_ABELHA DOCEIRA LTDA_26072017_00008153-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10296_ABELHA DOCEIRA LTDA_26072017_00008154-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10296_ABELHA DOCEIRA LTDA_26072017_00008155-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10296_ABELHA DOCEIRA LTDA_28072017_00008156-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10296_ABELHA DOCEIRA LTDA_28072017_00008157-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10314_ADEMIR RODRIGUES DE SOUZA_26072017_000000006-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10627_ADRIANA VIEIRA MARINS_26072017_000000001-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10627_ADRIANA VIEIRA MARINS_26072017_000000003-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10627_ADRIANA VIEIRA MARINS_26072017_000000007-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10845_ADEMILTON PEREIRA MACEDO_26072017_000000004-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10845_ADEMILTON PEREIRA MACEDO_26072017_000001113-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10845_ADEMILTON PEREIRA MACEDO_26072017_000001114-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10847_ADELIR VIEIRA DOS SANTOS_26072017_000000002-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Julho/10847_ADELIR VIEIRA DOS SANTOS_26072017_000000005-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10296_ABELHA DOCEIRA LTDA_28062017_00008150-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10296_ABELHA DOCEIRA LTDA_28062017_00008151-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10443_ACRED RIO 2010 COMERCIO_28062017_000000006-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10443_ACRED RIO 2010 COMERCIO_28062017_000000007-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10443_ACRED RIO 2010 COMERCIO_28062017_000000008-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10443_ACRED RIO 2010 COMERCIO_28062017_000000009-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/10910_Alessandra Targueta_02-01-2017_000000002-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/1800_ADARINA DE SOUZA AGUIAR_28062017_000000005-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/51400_ADELIR FONSECA GUIMARAES_28062017_000000003-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/51400_ADELIR FONSECA GUIMARAES_28062017_000000004-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/91000_ADEMIR UMBERTO DA SILVA_28062017_00008148-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Junho/91000_ADEMIR UMBERTO DA SILVA_28062017_00008149-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Março/10141_ALANA TELLES MEIRELLES_09-04-2017_00008146-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Março/10229_Andre Alves de Souza_05-04-2017_00008147-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Março/10296_Abelha Doceira Ltda_15-04-2017_00008142-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Março/10307_Adriano Von Pfuhl Rodrigues_05-04-2017_00008144-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Março/10342_Adinaldo Machado da Silva_05-04-2017_00008143-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Março/10384_Ailton Silva Motta_10-04-2017_00008145-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/10160_ABDON DA SILVA CHAVES_09112017_00003476-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/10160_ABDON DA SILVA CHAVES_10112017_00003477-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/10360_ARLY GOMES PEREIRA ADÃO_09112017_00003479-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/10360_ARLY GOMES PEREIRA ADÃO_10112017_00003480-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/25800_MARIA JOSÉ DELGADO DA SILVA_08112017_00003478-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/3000_ALESSANDRO DE SOUZA VASCONCELOS_08112017_00003473-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/3000_ALESSANDRO DE SOUZA VASCONCELOS_09112017_00003474-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Novembro/9400_ELIANE DE SOUSA MELO_08112017_00003475-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Outubro/10266_FUNDACAO  MUNICIPAL DE SAUDE_04102017_00002020-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Outubro/10266_FUNDACAO  MUNICIPAL DE SAUDE_10102017_00002021-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Outubro/10266_FUNDACAO  MUNICIPAL DE SAUDE_10102017_00002022-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Setembro/10002_LUCIO FLAVIO CORRÊA BUENO_10-10-2017_000010622-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Setembro/10003_MARIA DE FÁTIMA CASTRO COUTINHO_18-10-2017_000010623-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Setembro/10006_SAMUEL SANTOS DO NASCIMENTO_03-10-2017_000010624-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Setembro/10170_Adilson Porfirio da Costa_30-09-2017_000010617-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2017/Setembro/10239_Fatima Graça dos Santos_30-09-2017_000010621-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10109_Allana Pimentel Goncalves_05-06-2016_00009908-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10109_Allana Pimentel Goncalves_05-10-2016_00009910-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10217_Fernando Pereira da Silva_27-09-2017_00009909-2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10296_ABELHA DOCEIRA LTDA_07022018_00009912-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10296_ABELHA DOCEIRA LTDA_07022018_00009913-4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10325_Elisabete de Fátima Silva Thess_05-12-2017_00009691-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Fevereiro/10402_Helena Almeida Melo_10-09-2017_00009911-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10296_ABELHA DOCEIRA LTDA_08012018_00009893-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10296_ABELHA DOCEIRA LTDA_08012018_00009895-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10296_ABELHA DOCEIRA LTDA_29012018_00009907-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10418_Aldair José Pinheiro_05-01-2018_00009894-6.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10418_Aldair José Pinheiro_05-02-2018_00009896-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10418_Aldair José Pinheiro_05-12-2017_00009778-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/10418_Aldair José Pinheiro_05-12-2017_00009892-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009897-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009898-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009899-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009900-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009901-9.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009902-7.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009903-5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009904-3.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009905-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Janeiro/24600_RENATO DA CUNHA ALMEIDA_29012018_00009906-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Maio/10677_Adriana Maria da Silva_15-05-2018_000000010-8.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Boletas/2018/Maio/10677_Adriana Maria da Silva_15-05-2018_13500505837-0.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/.directory" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/0101072020.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/0107052020.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/0201072020.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/2016/Dezembro/129000 - Victor Charles de Araújo_15122016_0091728.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/2016/Março/155000 - Maria Margarida de Souza Ferreira_16032016_0222836.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/2016/Março/155000 - Maria Margarida de Souza Ferreira_16032016_0222838.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/2016/Novembro/83400 - Adao Maris Melo_18112016_0091727.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/2017/Abril/21800 - Priscila Garcia de Mello_07042017_0018137.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Extratos/2020/Abril/281000 - Adalgiza Maria Monteiro Junger_09042020_0405113.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2015/Dezembro/DP_0020470_07-12-2015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2015/Dezembro/DP_0020472_07-12-2015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2015/Novembro/AV_11112015_0208682_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2015/Novembro/AV_11112015_0208683_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2015/Setembro/RT_15092015_0000000.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227282_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227283_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227284_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227285_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227286_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227287_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227288_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227289_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227290_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227291_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227292_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227293_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227294_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227295_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227296_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227297_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227298_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/AV_20042016_0227299_AVISO ADM.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/DP_0227300_20-04-2016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/DP_0227301_20-04-2016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/DP_0227302_20-04-2016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/DP_0227303_20-04-2016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Abril/DP_0227304_20-04-2016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Dezembro/AV_01122016_0254800_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Dezembro/AV_01122016_0254801_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Dezembro/AV_01122016_0254802_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Dezembro/AV_30122016_0258661_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Dezembro/AV_30122016_0258662_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Dezembro/AV_30122016_0258663_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Janeiro/25000 - Dario Vieira Leal_14012016_0073538.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Janeiro/46200 - Moacyr Jose da Cruz_18012016_0073540.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Janeiro/46200 - Moacyr Jose da Cruz_18012016_0074641.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Julho/AV_30072016_0239918_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Julho/AV_30072016_0239919_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Julho/AV_30072016_0239920_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Julho/AV_30072016_0239921_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Junho/265800 - Adalberto Pimenta de Macena_21062016_0234517.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Junho/281000 - Adalgiza Maria Monteiro Junger_21062016_0234518.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Junho/281000 - Adalgiza Maria Monteiro Junger_21062016_0234519.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Junho/281000 - Adalgiza Maria Monteiro Junger_21062016_0234520.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Junho/281000 - Adalgiza Maria Monteiro Junger_21062016_0234521.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Março/AV_01032016_0220982_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Março/AV_01032016_0220983_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Março/AV_01032016_0220984_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Março/AV_01032016_0220985_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Março/AV_07032016_0221697_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Março/AV_07032016_0221698_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Novembro/AV_01112016_0251083_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Novembro/AV_01112016_0251084_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Novembro/AV_01112016_0251085_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Outubro/83400 - Adao Maris Melo_13102016_0090433.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Outubro/83400 - Adao Maris Melo_13102016_0090434.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Outubro/AV_01102016_0247445_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Outubro/AV_01102016_0247446_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Outubro/AV_01102016_0247447_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2016/Outubro/AV_01102016_0247448_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/AV_02042017_0270024_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/AV_02042017_0270025_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/AV_02042017_0270026_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/AV_02042017_0270027_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_07042017_0018135-01_01_10225.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_07042017_0018136-01_01_10225.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_07042017_0018138-01_01_10225.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_19042017_0048776-01_01_10034.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_19042017_0048777-01_01_10645.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103278-1_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103278-2_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103279-1_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103279-2_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103280-1_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103280-2_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103281-1_10802.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Abril/RC_26042017_0103281-2_10802.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Agosto/AV_01082017_0286094_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Agosto/AV_01082017_0286095_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Agosto/AV_01082017_0286096_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Agosto/AV_01082017_0286097_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Dezembro/AV_30122017_0305625_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Dezembro/AV_30122017_0305626_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Dezembro/AV_30122017_0305627_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Dezembro/AV_30122017_0305628_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Fevereiro/AV_01022017_0262336_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Fevereiro/AV_01022017_0262337_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Fevereiro/AV_01022017_0262338_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Janeiro/RC_06012017_0245359-01_01_12974.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Janeiro/RC_06012017_0245360-01_01_12974.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Janeiro/RC_06012017_0245361-01_01_12974.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Julho/AV_01072017_0282057_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Julho/AV_01072017_0282058_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Julho/AV_01072017_0282059_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Julho/AV_01072017_0282060_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Junho/AV_01062017_0278081_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Junho/AV_01062017_0278082_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Junho/AV_01062017_0278083_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Junho/AV_01062017_0278084_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Junho/RC_21062017_0103282-1_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Junho/RC_21062017_0103282-2_10977.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Novembro/AV_30112017_0301710_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Novembro/AV_30112017_0301711_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Novembro/AV_30112017_0301712_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Novembro/AV_30112017_0301713_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Setembro/AV_30092017_0294000_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Setembro/AV_30092017_0294001_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Setembro/AV_30092017_0294002_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2017/Setembro/AV_30092017_0294003_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Abril/AV_01042018_0317823_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Abril/AV_01042018_0317824_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Abril/AV_01042018_0317825_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Abril/AV_01042018_0317826_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Fevereiro/AV_01022018_0309719_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Fevereiro/AV_01022018_0309720_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Fevereiro/AV_01022018_0309721_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Fevereiro/AV_01022018_0309722_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Janeiro/PC_31-01-2018_0309530.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Junho/89800 - Maria Delicia Fontoura Dias_05062018_0025570.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Junho/89800 - Maria Delicia Fontoura Dias_05062018_0025571.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_01052018_0321893_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_01052018_0321894_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_01052018_0321895_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_01052018_0321896_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_31052018_0325998_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_31052018_0325999_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_31052018_0326000_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/AV_31052018_0326001_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/RC_16052018_0058878-01_01_10034.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Maio/RC_16052018_0058879-01_01_10034.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Março/3000 - ALESSANDRO DE SOUZA VASCONCELOS_19032018_0032958.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Março/AV_01032018_0313569_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Março/AV_01032018_0313570_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Março/AV_01032018_0313571_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2018/Março/AV_01032018_0313572_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Abril/RC_09042020_0405111-01_01_12718.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Abril/RC_09042020_0405112-01_01_12109.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_01072020_0419857_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_01072020_0419858_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_01072020_0419859_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_01072020_0419860_AVISO SOCIO.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419857_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419858_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419859_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419860_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419861_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419862_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Julho/AV_09072020_0419863_AVISO DISPONIVEL.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Junho/14600 - Marcelo de Almeida Oliveira_04062020_00000-1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Junho/14600 - Marcelo de Almeida Oliveira_04062020_0036895.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Recibos/2020/Maio/67000 - Lucia Maria dos Santos Cunha e Outros_26052020_0412769.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Dezembro/Dirrf2_01122015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Dezembro/despesas_07122015_2015-12-07_2015-12-07.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Novembro/Dirrf2_23112015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Novembro/Dirrf2_30112015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Novembro/razao18-11-2015_13_13.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/Retencao_09092015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/Seguros_09092015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-01-01_2015-01-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-02-01_2015-02-28.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-03-01_2015-03-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-04-01_2015-04-30.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-05-01_2015-05-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-06-01_2015-06-30.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-07-01_2015-07-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/despesas_02092015_2015-08-01_2015-08-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/pgSeguros_09092015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2015/Setembro/razao17-09-2015_10_10.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Dirrf2_18042016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Dirrf2_19042016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Dirrf2_20042016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Dirrf2_22042016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Dirrf2_26042016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Dirrf2_MCeleste.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/Maria.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-01_2016-04-01.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-01_2016-04-04.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-01_2016-04-05.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-01_2016-04-06.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-01_2016-04-07.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-01_2016-04-08.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-04_2016-04-04.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-05_2016-04-05.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-06_2016-04-06.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-07_2016-04-07.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/despesas_20042016_2016-04-08_2016-04-08.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/razao14-04-2016_09_17.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/razao14-04-2016_09_19.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/razao20-04-2016_10_21.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/razao20-04-2016_11_13.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/razao20-04-2016_12_22.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Abril/razao20-04-2016_13_00.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Dezembro/Seguros_21122016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Dezembro/pgSeguros_21122016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Fevereiro/Dirrf2_29022016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/DiasVectos_25012016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/Dirrf2_06012016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/despesas_04012016_2015-12-01_2015-12-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/diario_04012016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/diario_13012016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/diario_14012016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/diario_18012016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao04-01-2016_10_50.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao04-01-2016_11_02.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao13-01-2016_15_19.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao13-01-2016_15_36.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao13-01-2016_19_01.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao18-01-2016_09_01.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao18-01-2016_11_51.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao18-01-2016_12_00.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao18-01-2016_12_02.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Janeiro/razao18-01-2016_12_45.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Novembro/PropLoca_01112016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/despesas_15092016_2016-09-01_2016-09-14.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/despesas_15092016_2016-09-14_2016-09-14.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/diario_15092016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/razao15-09-2016_08_27.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/razao15-09-2016_09_53.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/razao15-09-2016_10_16.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/razao15-09-2016_10_22.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2016/Setembro/razao15-09-2016_10_24.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Agosto/despesas_01082017_01_01_2017_01_08_2017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Agosto/despesas_01082017_01_08_2017_01_08_2017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Agosto/despesas_01082017_2017-01-01_2017-08-01.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/DiasVectos_21022017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/NovosVectos_21022017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/SaldoProp21-02-2017_10_54.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/SaldoProp21-02-2017_10_58.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/SaldosLoca_21022017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/despesas_21022017_2017-02-01_2017-02-21.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/razao21-02-2017_10_47.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/razao21-02-2017_10_48.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Fevereiro/razao21-02-2017_10_50.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Maio/diario_03052017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Setembro/Periodo_18092017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Setembro/despesas_14092017_2017-08-01_2017-09-14.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Setembro/despesas_14092017_2017-09-01_2017-09-14.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Setembro/despesas_14092017_2017-09-14_2017-09-14.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Setembro/diario_14092017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2017/Setembro/razao18-09-2017_12_29.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2018/Fevereiro/Dirrf2_19022018.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2018/Janeiro/PropLoca_04012018.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2018/Maio/Dirrf2_10052018.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2018/Maio/Dirrf2_16052018.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2018/Maio/Dirrf2_17052018.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/despesas_09042020_2019-03-01_2019-03-31.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/despesas_16042020_2020-04-01_2020-04-16.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/diario_28042020.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao09-04-2020_07_46.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao14-04-2020_09_14.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao14-04-2020_18_08.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao15-04-2020_19_06.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao16-04-2020_06_35.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao16-04-2020_06_45.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/2020/Abril/razao16-04-2020_12_04.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/Atrasados_06112015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/Atrasados_21022017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/Atrasados_21122015.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/Atrasados_21122017.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/TarifaBancaria_20092016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/Relatorios/TarifaBancaria_27102016.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rPropLoca.jasper" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rPropLoca.jasper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rReajuste.jasper" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rReajuste.jasper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rReajuste.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rReajuste.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rRelSegADM.jasper" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rRelSegADM.jasper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rRelSegADM.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rRelSegADM.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rSeguroNPagos.jasper" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rSeguroNPagos.jasper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rSeguroPagos.jasper" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rSeguroPagos.jasper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reports/rSeguroPagos.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/reports/rSeguroPagos.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/logos/boleta/olimar.gif" beforeDir="false" afterPath="$PROJECT_DIR$/resources/logos/boleta/olimar.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/logos/boleta/olimar.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/resources/logos/boleta/olimar.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/logos/extrato/olimar.gif" beforeDir="false" afterPath="$PROJECT_DIR$/resources/logos/extrato/olimar.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bancos/Santander.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bancos/Santander.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bancos/itau.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bancos/itau.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/Autorizador/Verifica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/Autorizador/Verifica.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/Dates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/Dates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/DbMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/DbMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/FuncoesGlobais.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/FuncoesGlobais.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/JEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/JEmail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/LerValor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/LerValor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/MultColumnSort/DefaultTableHeaderCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/MultColumnSort/DefaultTableHeaderCellRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Funcoes/TableControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Funcoes/TableControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/Divisao.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/Divisao.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/Divisao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/Divisao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jADMParametros.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jADMParametros.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jADMParametros.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jADMParametros.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jAdcReten.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jAdcReten.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jAdiantamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jAdiantamento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jAltRecibos.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jAltRecibos.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jAltRecibos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jAltRecibos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jAviso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jAviso.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jBloqueio.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jBloqueio.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jBloqueio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jBloqueio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDescontos.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDescontos.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDescontos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDescontos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDiferencas.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDiferencas.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDiferencas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDiferencas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDimob.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDimob.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDimob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDimob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDocViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDocViewer.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jDocViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jDocViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jExtorno.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jExtorno.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jExtrato.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jExtrato.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jExtrato.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jExtrato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jImpBoletas.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jImpBoletas.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jImpBoletas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jImpBoletas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jMultas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jMultas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jRazaoAcumulado.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jRazaoAcumulado.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jRazaoAcumulado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jRazaoAcumulado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jReajuste.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jReajuste.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jRecebtos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jRecebtos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jRecebtos_fake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jRecebtos_fake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jRelAviAdm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jRelAviAdm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Movimento/jRelSdProp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Movimento/jRelSdProp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Protocolo/Calculos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Protocolo/Calculos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Protocolo/DepuraCampos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Protocolo/DepuraCampos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Relatorios/rSegurosPago.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Relatorios/rSegurosPago.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Relatorios/rSegurosPago.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Relatorios/rSegurosPago.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Transicao/jPagarExtrato.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transicao/jPagarExtrato.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Transicao/jPagarExtrato.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transicao/jPagarExtrato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Locatarios/jFiadores.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Locatarios/jFiadores.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Locatarios/jFiadores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Locatarios/jFiadores.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Locatarios/jLocatarios.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Locatarios/jLocatarios.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Locatarios/jLocatarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Locatarios/jLocatarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Locatarios/jPagtos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Locatarios/jPagtos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Partida/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Partida/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/Partida/jLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/Partida/jLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/jProprietarios.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/jProprietarios.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/jProprietarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/jProprietarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/j4rent/jTelsCont.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/j4rent/jTelsCont.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="9" />
+    <option name="width" value="1280" />
+    <option name="height" value="684" />
+  </component>
+  <component name="ProjectId" id="1vaYWgokIljGDOSVolERIa03Rhf" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="original_old" type="b2602c69:ProjectViewProjectNode" />
+              <item name="original_old" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="original_old" type="b2602c69:ProjectViewProjectNode" />
+              <item name="original_old" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="original_old" type="b2602c69:ProjectViewProjectNode" />
+              <item name="original_old" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="original_old" type="b2602c69:ProjectViewProjectNode" />
+              <item name="original_old" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
+              <item name="original_old_jar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="original_old" type="b2602c69:ProjectViewProjectNode" />
+              <item name="original_old" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537286881120" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/j4Rent_29102021.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="original" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="C:\Program Files\Java\jdk1.8.0_172\jre" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="j4rent.Partida.Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6b6cd607-d291-457b-9f08-877b63e8fecb" name="Default Changelist" comment="" />
+      <created>1537286551895</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1537286551895</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24962178" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" weight="0.32843137" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>original_old:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Boleta</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>j4Rent</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
