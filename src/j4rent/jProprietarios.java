@@ -1545,7 +1545,7 @@ public class jProprietarios extends javax.swing.JInternalFrame {
                     }
                 }
             }
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {/* e.printStackTrace(); */}
         
         mProfissao.setText(pResult.getString("profissao"));
         mRepresentante.setText(pResult.getString("representante"));

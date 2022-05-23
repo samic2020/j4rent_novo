@@ -5,7 +5,7 @@
  */
 package Movimento;
 
-import Funcoes.JEmail3;
+import Funcoes.Outlook;
 import Funcoes.TableControl;
 import Funcoes.VariaveisGlobais;
 import Funcoes.toPreview;
@@ -163,6 +163,7 @@ public class jDocViewer extends javax.swing.JInternalFrame {
 
             }
         ));
+        tFiles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tFiles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tFilesMouseReleased(evt);
@@ -442,20 +443,22 @@ public class jDocViewer extends javax.swing.JInternalFrame {
         int modelRow = tFiles.convertRowIndexToModel(selRow);
         String rdoc = (String) tFiles.getModel().getValueAt(modelRow, 0);
 
+        Outlook email = new Outlook(true);
         try {            
-            JEmail3 email = new JEmail3(
-                    jPara.getText(), 
-                    new String[] {pasta + rdoc}, 
-                    jSubject.getText(), 
-                   jMensagem.getDocument().getText(0, jMensagem.getDocument().getLength()).replace("\n", "<br>")
-            );
-            if (!email.isIsOK()) {
+            String To = jPara.getText().trim().toLowerCase();
+            String Subject = jSubject.getText().trim();
+            String Body = jMensagem.getDocument().getText(0, jMensagem.getDocument().getLength()).replace("\n", "<br>");
+            String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + pasta + rdoc};
+            email.Send(To, null, Subject, Body, Attachments);
+            if (!email.isSend()) {
                 JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            email = null;
         }
     }//GEN-LAST:event_jbtSendActionPerformed
 

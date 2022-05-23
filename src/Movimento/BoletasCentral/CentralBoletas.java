@@ -11,6 +11,7 @@ import Funcoes.Dates;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
 import Funcoes.LerValor;
+import Funcoes.Outlook;
 import Funcoes.StringManager;
 import Funcoes.TableControl;
 import Funcoes.VariaveisGlobais;
@@ -29,7 +30,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -1349,31 +1349,45 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             int modelRow = tblEmails.convertRowIndexToModel(nRow);
 
             contrato = tblEmails.getModel().getValueAt(modelRow, 0).toString();
+            String[][] EmailLocaDados = null;
+            try {
+                EmailLocaDados = conn.LerCamposTabela(new String[] {"nome","email"}, "locatarios", "contrato = '" + contrato + "'");
+            } catch (SQLException e) {}
+            
+            String EmailLoca = null;
+            if (EmailLocaDados != null) EmailLoca = EmailLocaDados[1][3].toLowerCase();
+                        
             vencto = tblEmails.getModel().getValueAt(modelRow, 2).toString();
             try {filename = tblEmails.getModel().getValueAt(modelRow, 5).toString();} catch (Exception ex) {}
             String[] attachMent;
             if (filename.isEmpty()) {
                 attachMent = new String[]{};
             } else {
-                attachMent = new String[]{filename};
+                attachMent = new String[]{System.getProperty("user.dir") + "/" + filename};
             }
             status = tblEmails.getModel().getValueAt(modelRow, 6).toString();
             
             if (!status.equalsIgnoreCase("OK")) {
-                JEmail3 msg = null;
-                try {
-                    if (!jSemEnvio.isSelected()) {
-                        msg = new JEmail3(contrato, attachMent, edtSubJect.getText(), _htmlPane.getText().replaceAll("\n", "<br>"));
-                    } else msg.setIsOK(true);
-                    //if (msg.trim().equalsIgnoreCase("") || msg.trim().equalsIgnoreCase("OK")) msg = "OK"; else msg = "Err";
-                } catch (Exception mex) {}  
-
-                // Atualiza bd recibos com emailbol = 'S'
-                if (msg.isIsOK()) {
-                    conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+                Outlook email = new Outlook();
+                try {            
+                    String To = EmailLoca.trim().toLowerCase();
+                    String Subject = edtSubJect.getText().trim();
+                    String Body = _htmlPane.getText().replaceAll("\n", "<br>");
+                    String[] Attachments = attachMent;
+                    email.Send(To, null, Subject, Body, Attachments);
+                    if (!email.isSend()) {
+                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
                             Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
+                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                } finally {
+                    email = null;
                 }
-                tblEmails.getModel().setValueAt(msg.isIsOK() ? "Ok" : "Err", modelRow, 6);
             }
         }
         
@@ -1417,32 +1431,45 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             int modelRow = tblEmails.convertRowIndexToModel(nRow);
 
             contrato = tblEmails.getModel().getValueAt(modelRow, 0).toString();
+            String[][] EmailLocaDados = null;
+            try {
+                EmailLocaDados = conn.LerCamposTabela(new String[] {"nome","email"}, "locatarios", "contrato = '" + contrato + "'");
+            } catch (SQLException e) {}
+            
+            String EmailLoca = null;
+            if (EmailLocaDados != null) EmailLoca = EmailLocaDados[1][3].toLowerCase();
+            
             vencto = tblEmails.getModel().getValueAt(modelRow, 2).toString();
             try {filename = tblEmails.getModel().getValueAt(modelRow, 5).toString();} catch (Exception ex) {}
             String[] attachMent;
             if (filename.isEmpty()) {
                 attachMent = new String[]{};
             } else {
-                attachMent = new String[]{filename};
+                attachMent = new String[]{System.getProperty("user.dir") + "/" + filename};
             }
             status = tblEmails.getModel().getValueAt(modelRow, 6).toString();
             
             if (!status.equalsIgnoreCase("OK")) {
-                JEmail3 msg = null;
-                try {
-                    if (!jSemEnvio.isSelected()) {
-                        String body = _htmlPane.getText(); //.replaceAll("\n", "<br>");                        
-                        msg = new JEmail3(contrato, attachMent, edtSubJect.getText(), body);
-                        //if (msg.trim().equalsIgnoreCase("")) msg = "OK"; else msg = "Err";
-                    } else msg.setIsOK(true);
-                } catch (Exception mex) {}
-
-                // Atualiza bd recibos com emailbol = 'S'
-                if (msg.isIsOK()) {
-                    conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+                Outlook email = new Outlook();
+                try {            
+                    String To = EmailLoca.trim().toLowerCase();
+                    String Subject = edtSubJect.getText().trim();
+                    String Body = _htmlPane.getText();
+                    String[] Attachments = attachMent;
+                    email.Send(To, null, Subject, Body, Attachments);
+                    if (!email.isSend()) {
+                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
                             Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
-                }
-                tblEmails.getModel().setValueAt(msg.isIsOK() ? "Ok" : "Err", modelRow, 6);
+                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                } finally {
+                    email = null;
+                }                                
             }
         }
         

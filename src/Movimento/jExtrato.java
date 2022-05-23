@@ -867,32 +867,23 @@ public class jExtrato extends javax.swing.JInternalFrame {
                     String EmailLoca = EmailLocaDados[1][3].toLowerCase();
                     boolean emailvalido = (EmailLoca.indexOf("@") > 0) && (EmailLoca.indexOf("@")+1 < (EmailLoca.lastIndexOf(".")) && (EmailLoca.lastIndexOf(".") < EmailLoca.length()) );
                     if (emailvalido) {
+                        Outlook email = new Outlook();
                         try {            
-                            JEmail3 email = new JEmail3(
-                                    EmailLoca, 
-                                    new String[] {FileNamePdf}, 
-                                    "Extrato do Mês", 
-                                   "Documento em Anexo no formato pdf"
-                            );
-                            if (!email.isIsOK()) {
+                            String To = EmailLoca.trim().toLowerCase();
+                            String Subject = "Extrato do Mês";
+                            String Body = "Documento em Anexo no formato pdf";
+                            String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + FileNamePdf};
+                            email.Send(To, null, Subject, Body, Attachments);
+                            if (!email.isSend()) {
                                 JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
                             } else {
                                 JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
-                        }                    
-//                        try {
-//                            if (!new JEmail3().SendEmail(EmailLoca, FileNamePdf, "Extrato do Mês", "Documento em Anexo no formato pdf").equals("")) {
-//                                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-//                            } else {
-//                                JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-//                            }
-//                        } catch (MalformedURLException ex) {
-//                            Logger.getLogger(jViewDoctos.class.getName()).log(Level.SEVERE, null, ex);
-//                        } catch (SQLException ex) {
-//                            Logger.getLogger(jViewDoctos.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
+                        } finally {
+                            email = null;
+                        }
                     }
                 }
 

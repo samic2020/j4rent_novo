@@ -31,6 +31,7 @@ public class Outlook {
     static boolean send = false;
     
     public Outlook() {}
+    public Outlook(boolean readJacob) { if (readJacob) LoadJacobDll(); }
     
     public static ArrayList<String> getAccounts() {
         LoadOutlookAccounts();
@@ -80,7 +81,7 @@ public class Outlook {
         } while (true);
     }
     
-    static private void LoadOutlookAccounts() {
+    static public void LoadOutlookAccounts() {
         ActiveXComponent axOutlook = null;
         try {            
             axOutlook = new ActiveXComponent("Outlook.Application");
@@ -95,7 +96,8 @@ public class Outlook {
     }
     
     private void LoadJacobDll() {
-        String libFile = System.getProperty("os.arch").equals("amd64") ? "jacob-1.20-x64.dll" :"jacob-1.20-x86.dll";
+        String libFile = System.getProperty("user.dir") + "/" +
+                         (System.getProperty("os.arch").equals("amd64") ? "jacob-1.20-x64.dll" :"jacob-1.20-x86.dll");
         try{
             /**
              * Reading jacob.dll file
@@ -127,7 +129,7 @@ public class Outlook {
         return matcher.matches();
     }    
     
-    private void Send(String[] To, String[] Cc, String Subject, String Body, String[] Attachments) {
+    public void Send(String To, String Cc, String Subject, String Body, String[] Attachments) {
         ActiveXComponent oOutlook = new ActiveXComponent("Outlook.Application");
         try { 
             DispatchEvents events = new DispatchEvents( oOutlook,
@@ -150,7 +152,7 @@ public class Outlook {
             Dispatch mail = Dispatch.invoke( oOutlook.getObject(), "CreateItem", Dispatch.Get, new Object[] { "0" }, new int[0]).toDispatch();
 
             Dispatch.put(mail, "To", To );
-            if (Cc.length > 0) Dispatch.put(mail, "Cc", Cc );
+            if (Cc != null) Dispatch.put(mail, "Cc", Cc );
             Dispatch.put(mail, "Subject", Subject );
             Dispatch.put(mail, "Body", Body);
             Dispatch.put(mail, "ReadReceiptRequested", "true" );
@@ -166,6 +168,7 @@ public class Outlook {
             oOutlook.safeRelease();
             ComThread.Release();
         } catch (Exception e) {
+            send = false;
             e.printStackTrace();
         } finally {
             try { oOutlook.invoke("Quit", new Variant[] {}); } catch (Exception e) {}
