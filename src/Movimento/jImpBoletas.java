@@ -415,6 +415,14 @@ public class jImpBoletas extends javax.swing.JInternalFrame {
             rgprp = jLista.getModel().getValueAt(modelRow, 0).toString();
             rgimv = jLista.getModel().getValueAt(modelRow, 1).toString();
             contrato = jLista.getModel().getValueAt(modelRow, 2).toString();
+            String[][] EmailLocaDados = null;
+            try {
+                EmailLocaDados = conn.LerCamposTabela(new String[] {"nomerazao","email"}, "locatarios", "contrato = '" + contrato + "'");
+            } catch (SQLException e) {}
+            
+            String EmailLoca = null;
+            if (EmailLocaDados != null) EmailLoca = EmailLocaDados[1][3].toLowerCase();
+            
             vencto = jLista.getModel().getValueAt(modelRow, 4).toString();
             
             try { nnumero = jLista.getModel().getValueAt(modelRow, 5).toString().substring(3); } catch (Exception ex) {nnumero = ""; }
@@ -473,8 +481,27 @@ public class jImpBoletas extends javax.swing.JInternalFrame {
                     String[][] asend = conn.LerCamposTabela(new String[] {"envio"}, "locatarios", "contrato = '" + contrato + "'");
                     if (asend != null) {
                         if (Integer.valueOf(asend[0][3]) == 1) {
-                            String msg = new JEmail().SendEmail(contrato, outFileName, "Boleta de Aluguel do Mês", "EM ANEXO BOLETA NO FORMATO PDF");
-                            StatusEmail(outFileName, msg);
+                            Outlook email = new Outlook();
+                            try {            
+                                String To = EmailLoca.trim().toLowerCase();
+                                String Subject = "Boleta de Aluguel do Mês".trim();
+                                String Body = "EM ANEXO BOLETA NO FORMATO PDF";
+                                String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + outFileName};
+                                email.Send(To, null, Subject, Body, Attachments);
+                                if (!email.isSend()) {
+                                    JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+                                        Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
+                                    JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                                String msg = (email.isSend() ? "Ok" : "Err");
+                                StatusEmail(outFileName, msg);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            } finally {
+                                email = null;
+                            }                
                         } else {
                             new toPrint(outFileName,VariaveisGlobais.Boleta.split(",")[0],VariaveisGlobais.Boleta.split(",")[1],VariaveisGlobais.Boleta.split(",")[2]);
                         }

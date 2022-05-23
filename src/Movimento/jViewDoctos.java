@@ -13,11 +13,10 @@ package Movimento;
 import Funcoes.ApplicationPath;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
-import Funcoes.JEmail;
+import Funcoes.Outlook;
 import Funcoes.TableControl;
 import Funcoes.VariaveisGlobais;
 import Funcoes.toPreview;
-import Funcoes.toPrint;
 import Funcoes.toPrint2;
 import java.io.BufferedReader;
 import java.io.File;
@@ -479,16 +478,23 @@ protected static String[] carregaDados(String DADOS) {
         int selRow = jtbFiles.getSelectedRow();
         int modelRow = jtbFiles.convertRowIndexToModel(selRow);
         String rdoc = (String) jtbFiles.getModel().getValueAt(modelRow, 0);
-        try {
-            if (!new JEmail().SendEmail(jPara.getText(), pasta + rdoc, jSubject.getText(), jMensagem.getText()).equals("")) {
+        
+        Outlook email = new Outlook(true);
+        try {            
+            String To = jPara.getText().trim().toLowerCase();
+            String Subject = jSubject.getText().trim();
+            String Body = jMensagem.getDocument().getText(0, jMensagem.getDocument().getLength()).replace("\n", "<br>");
+            String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + pasta + rdoc};
+            email.Send(To, null, Subject, Body, Attachments);
+            if (!email.isSend()) {
                 JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
             }
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(jViewDoctos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(jViewDoctos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            email = null;
         }
     }//GEN-LAST:event_jbtSendActionPerformed
 
