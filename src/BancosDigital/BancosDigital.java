@@ -2192,7 +2192,7 @@ public class BancosDigital extends javax.swing.JInternalFrame {
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getText().replaceAll("\n", "<br>");
+                    String Body = _htmlPane.getText();
                     String[] Attachments = attachMent;
                     email.Send(To, null, Subject, Body, Attachments);
                     if (!email.isSend()) {
@@ -2281,7 +2281,7 @@ public class BancosDigital extends javax.swing.JInternalFrame {
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getText().replaceAll("\n", "<br>");
+                    String Body = _htmlPane.getText();
                     String[] Attachments = attachMent;
                     email.Send(To, null, Subject, Body, Attachments);
                     if (!email.isSend()) {

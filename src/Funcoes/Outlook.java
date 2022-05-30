@@ -151,10 +151,10 @@ public class Outlook {
         try {
             Dispatch mail = Dispatch.invoke( oOutlook.getObject(), "CreateItem", Dispatch.Get, new Object[] { "0" }, new int[0]).toDispatch();
 
-            Dispatch.put(mail, "To", To );
-            if (Cc != null) Dispatch.put(mail, "Cc", Cc );
-            Dispatch.put(mail, "Subject", Subject );
-            Dispatch.put(mail, "Body", Body);
+            Dispatch.put(mail, "To", MultEmail(To) );
+            if (Cc != null) Dispatch.put(mail, "Cc", MultEmail(Cc) );
+            Dispatch.put(mail, "Subject", delHTML(Subject) );
+            Dispatch.put(mail, "Body", delHTML(Body) );
             Dispatch.put(mail, "ReadReceiptRequested", "true" );
 
             if(Attachments.length > 0) {
@@ -173,5 +173,14 @@ public class Outlook {
         } finally {
             try { oOutlook.invoke("Quit", new Variant[] {}); } catch (Exception e) {}
 	}              
-     }
+    }
+    
+    private String MultEmail(String value) {
+        String retorno = value.replace(",", ";");
+        return retorno;
+    }    
+    
+    private String delHTML(String value) {        
+        return HtmlSanitizer.sanitize(value);
+    }      
 }

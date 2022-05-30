@@ -483,7 +483,7 @@ protected static String[] carregaDados(String DADOS) {
         try {            
             String To = jPara.getText().trim().toLowerCase();
             String Subject = jSubject.getText().trim();
-            String Body = jMensagem.getDocument().getText(0, jMensagem.getDocument().getLength()).replace("\n", "<br>");
+            String Body = jMensagem.getDocument().getText(0, jMensagem.getDocument().getLength());
             String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + pasta + rdoc};
             email.Send(To, null, Subject, Body, Attachments);
             if (!email.isSend()) {
