@@ -28,7 +28,7 @@ import org.json.JSONObject;
  * @author desenvolvimento-pc
  */
 public class Inter {
-    private String inter_conta = "140049096";
+    private String inter_conta = "212972278";
     private int inter_conta_len = 9;
     
     /**

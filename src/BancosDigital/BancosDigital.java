@@ -41,7 +41,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -2192,7 +2191,7 @@ public class BancosDigital extends javax.swing.JInternalFrame {
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getText();
+                    String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
                     String[] Attachments = attachMent;
                     email.Send(To, null, Subject, Body, Attachments);
                     if (!email.isSend()) {
@@ -2281,7 +2280,7 @@ public class BancosDigital extends javax.swing.JInternalFrame {
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getText();
+                    String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
                     String[] Attachments = attachMent;
                     email.Send(To, null, Subject, Body, Attachments);
                     if (!email.isSend()) {

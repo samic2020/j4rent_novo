@@ -1372,7 +1372,7 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getText();
+                    String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
                     String[] Attachments = attachMent;
                     email.Send(To, null, Subject, Body, Attachments);
                     if (!email.isSend()) {
@@ -1454,7 +1454,7 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getText();
+                    String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
                     String[] Attachments = attachMent;
                     email.Send(To, null, Subject, Body, Attachments);
                     if (!email.isSend()) {

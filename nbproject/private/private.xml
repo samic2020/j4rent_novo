@@ -4,13 +4,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Projetos/original_old/src/BancosDigital/classInter.java</file>
+            <file>file:/C:/Projetos/original_old/src/BancosDigital/PEMImporter.java</file>
             <file>file:/C:/Projetos/original_old/src/Movimento/PixCentral/CentralPix.java</file>
             <file>file:/C:/Projetos/original_old/src/BancosDigital/Inter.java</file>
-            <file>file:/C:/Projetos/original_old/src/Movimento/PixCentral/PixTreeTableModel.java</file>
-            <file>file:/C:/Projetos/original_old/src/Movimento/PixCentral/BancosPix2.java</file>
+            <file>file:/C:/Projetos/original_old/src/BancosDigital/ErrosTreeTableModel.java</file>
+            <file>file:/C:/Projetos/original_old/src/BancosDigital/bancos.java</file>
             <file>file:/C:/Projetos/original_old/src/Pix/PayLoad.java</file>
-            <file>file:/C:/Projetos/original_old/src/Movimento/PixCentral/PessoasPix.java</file>
-            <file>file:/C:/Projetos/original_old/src/Pix/bcPIX.java</file>
+            <file>file:/C:/Projetos/original_old/src/BancosDigital/classInterConsulta.java</file>
         </group>
     </open-files>
 </project-private>

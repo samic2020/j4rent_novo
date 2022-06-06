@@ -181,6 +181,10 @@ public class Outlook {
     }    
     
     private String delHTML(String value) {        
-        return HtmlSanitizer.sanitize(value);
+        return delTags(HtmlSanitizer.sanitize(value));
     }      
+    
+    private String delTags(String value) {
+        return value.replaceAll("o&#[0-9][0-9][0-9];", "");
+    }
 }
