@@ -2673,11 +2673,17 @@ public class BancosDigital extends javax.swing.JInternalFrame {
                             String nossoNumero = c.myfunction(lista,"nossoNumero").toString();
                             String cnpjCpfSacado = c.myfunction(lista,"cnpjCpfSacado").toString();
                             String nomeSacado = c.myfunction(lista,"nomeSacado").toString();
-                            BigDecimal valorMulta = new BigDecimal(c.myfunction(lista,"valorMulta").toString());
-                            BigDecimal valorJuros = new BigDecimal(c.myfunction(lista,"valorJuros").toString());
+                            BigDecimal valorMulta =  new BigDecimal("0"); //new BigDecimal(c.myfunction(lista,"valorMulta").toString());
+                            BigDecimal valorJuros =  new BigDecimal("0"); //new BigDecimal(c.myfunction(lista,"valorJuros").toString());
+                            BigDecimal valorRecebido = new BigDecimal("0");
+                            try { valorRecebido = new BigDecimal(c.myfunction(lista, "valorTotalRecebimento").toString()); } catch (Exception e) {}                            
                             BigDecimal valorNominal = new BigDecimal(c.myfunction(lista,"valorNominal").toString());
                             String situacao = c.myfunction(lista,"situacao").toString();
                             boolean baixado = isBaixado(nossoNumero);
+                            
+                            // Calculo - Adicionado em 07-06-2022
+                            if (valorRecebido.floatValue() != 0) valorMulta = valorRecebido.subtract(valorNominal);
+                            
                             pessoasBoleta.add(new classInterConsulta(dataEmissao, dataVencimento, dataPagamento, seuNumero, nossoNumero, cnpjCpfSacado, nomeSacado, valorMulta, valorJuros, valorNominal, situacao, baixado));
                             
                             int pgs2 = ((b++ * 100) / brc) + 1;
