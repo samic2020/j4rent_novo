@@ -53,8 +53,7 @@ public class LimitedTextField extends JTextField{
         }
 
         public void keyTyped(KeyEvent e){
-            if (    !backspace  &&
-                    getText().length()>maxLength-1){
+            if (!backspace  && getText().length()>maxLength-1){
                 e.consume();
             }
         }

@@ -26,9 +26,9 @@ public class toPreview {
     }
     
     private String LinuxTags(String outFileName) {
-        outFileName = outFileName.replace(" ", "\\ ");
-        outFileName = outFileName.replace("(", "\\(");
-        outFileName = outFileName.replace(")", "\\)");
+        outFileName = outFileName.replaceAll(" ", "\\ ");
+        outFileName = outFileName.replaceAll("(", "\\(");
+        outFileName = outFileName.replaceAll(")", "\\)");
         
         return outFileName;
     }

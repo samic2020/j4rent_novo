@@ -102,7 +102,7 @@ public class BoletaTreeTableModel extends AbstractTreeTableModel {
         return bancosBoleta.getPessoasBoleta().indexOf(pessoasBoleta);
     }
     
-@Override
+    @Override
     public Object getValueAt(Object node, int column) {
         if (node instanceof BancosBoleta) {
             BancosBoleta bancosBoleta = (BancosBoleta) node;

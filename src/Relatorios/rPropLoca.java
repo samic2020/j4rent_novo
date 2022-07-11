@@ -279,10 +279,10 @@ public class rPropLoca extends javax.swing.JInternalFrame {
         parametros.put("propini", pInic);
         parametros.put("propfim", pFinal);
         parametros.put("propstatus", pAtivo);
-        parametros.put("logo", "resources/logos/boleta/" + VariaveisGlobais.marca.trim() + ".gif");
+        parametros.put("logo", System.getProperty("user.dir") + "/" + "resources/logos/boleta/" + VariaveisGlobais.marca.trim() + ".gif");
         
         try {
-            String fileName = "reports/rPropLoca.jasper";
+            String fileName = System.getProperty("user.dir") + "/" + "reports/rPropLoca.jasper";
             JasperPrint print = JasperFillManager.fillReport(fileName, parametros, conn.conn);
 
             // Create a PDF exporter
