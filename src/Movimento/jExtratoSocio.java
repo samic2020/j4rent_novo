@@ -445,9 +445,12 @@ public class jExtratoSocio extends javax.swing.JInternalFrame {
                 "Atenção", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (n == JOptionPane.YES_OPTION) {
-            String sql = "UPDATE avisos SET tag = 'X' WHERE rid = 3 AND registro = '" + jRgprp.getSelectedItem().toString().trim() + "';";
-            conn.ExecutarComando(sql);
-            sql = "UPDATE SOCIOS SET saldoant = '" + LerValor.StringToFloat(sValor) + "' WHERE autoid = '" + jRgprp.getSelectedItem().toString().trim() + "';";
+            //String sql = "UPDATE avisos SET tag = 'X' WHERE rid = 3 AND registro = '" + jRgprp.getSelectedItem().toString().trim() + "';";
+            //conn.ExecutarComando(sql);
+            //sql = "UPDATE SOCIOS SET saldoant = '" + LerValor.StringToFloat(sValor) + "' WHERE autoid = '" + jRgprp.getSelectedItem().toString().trim() + "';";
+            //conn.ExecutarComando(sql);
+            UpdateSocios(VariaveisGlobais.dbnome, jRgprp.getSelectedItem().toString().trim(), LerValor.StringToFloat(sValor));
+            String sql = "Call UpdateSocios();";
             conn.ExecutarComando(sql);
             
             //Auditor
@@ -456,6 +459,17 @@ public class jExtratoSocio extends javax.swing.JInternalFrame {
         sValor = Imprimir(true, true);
         jRgprp.requestFocus();
     }//GEN-LAST:event_jPrintExtrActionPerformed
+    
+    private void UpdateSocios(String dataBaseName, String _rgprp, float _sdant) {
+        String sql = "DROP PROCEDURE IF EXISTS `" + dataBaseName + "`.`UpdateSocios`";
+        conn.ExecutarComando(sql);
+
+        sql = "CREATE DEFINER=`root`@`localhost` PROCEDURE  `" + dataBaseName + "`.`UpdateSocios`() BEGIN " +
+              "UPDATE avisos SET tag = 'X' WHERE rid = 3 AND registro = '" + _rgprp + "'; " +
+              "UPDATE SOCIOS SET saldoant = '" + _sdant + "' WHERE autoid = '" + _rgprp + "'; " +
+              "END";   
+        conn.ExecutarComando(sql);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
