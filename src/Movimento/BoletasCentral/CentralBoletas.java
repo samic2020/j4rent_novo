@@ -11,15 +11,20 @@ import Funcoes.Dates;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
 import Funcoes.LerValor;
-import Funcoes.Outlook;
+//import Funcoes.Outlook;
 import Funcoes.StringManager;
 import Funcoes.TableControl;
 import Funcoes.VariaveisGlobais;
+import Funcoes.gmail.GmailAPI;
+import static Funcoes.gmail.GmailOperations.createEmailWithAttachment;
+import static Funcoes.gmail.GmailOperations.createMessageWithEmail;
 import Funcoes.jDirectory;
 import Protocolo.Calculos;
 import Protocolo.DepuraCampos;
 import j4rent.Partida.Collections;
 import boleta.Boleta;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,9 +32,13 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -40,6 +49,8 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -85,12 +96,6 @@ import org.jdesktop.swingx.JXTreeTable;
  * @author softelet
  */
 public class CentralBoletas extends javax.swing.JInternalFrame {
-    private JEditorPane _htmlPane = new JEditorPane();
-
-    private final UndoManager undoManager = new UndoManager();
-    private final UndoAction undoAction = new UndoAction();
-    private final RedoAction redoAction = new RedoAction();
-
     private JXTreeTable treeTable;
     private List<BancosBoleta> bancosBoleta;
 
@@ -122,8 +127,6 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
         this.dmonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         MesRef.setValue(this.month[(new Date()).getMonth()]);
         AnoRef.setValue(1900 + new Date().getYear());
-                
-        EditorEmail();
     }
 
     /**
@@ -191,21 +194,9 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
         jPanel11 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         edtSubJect = new javax.swing.JTextField();
-        jPanel12 = new javax.swing.JPanel();
-        FontName = new javax.swing.JComboBox();
-        FontSize = new javax.swing.JComboBox();
-        FontBold = new javax.swing.JToggleButton();
-        FontItalic = new javax.swing.JToggleButton();
-        FontUnderLine = new javax.swing.JToggleButton();
-        jSeparator3 = new javax.swing.JSeparator();
-        TextAlignLeft = new javax.swing.JToggleButton();
-        TextAlignCenter = new javax.swing.JToggleButton();
-        TextAlignRigth = new javax.swing.JToggleButton();
-        TextAlignJustified = new javax.swing.JToggleButton();
-        FontColor = new javax.swing.JButton();
-        FontBackColor = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        pScroll = new javax.swing.JScrollPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jMensagem = new javax.swing.JEditorPane();
+        jLabel9 = new javax.swing.JLabel();
 
         jToggleButton2.setText("jToggleButton2");
 
@@ -660,7 +651,7 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jListarRemessa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(btnGerarRemessa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jProgressRemessa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -674,11 +665,11 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(ListaBancosPessoasRemessa, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -778,7 +769,7 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
                 .addComponent(btnListarBoletasEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSemEnvio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEnviarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEnviarSelecao, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -793,109 +784,26 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Assunto:");
 
-        FontName.setToolTipText("Tipo da Fonte");
+        jMensagem.setContentType("\"text/html\""); // NOI18N
+        jScrollPane4.setViewportView(jMensagem);
 
-        FontSize.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "6", "7", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "32", "64", "72" }));
-        FontSize.setToolTipText("Tamanho da Fonte");
-
-        FontBold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2532_text_bold.png"))); // NOI18N
-        FontBold.setToolTipText("Negrito");
-
-        FontItalic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2533_text_italic.png"))); // NOI18N
-        FontItalic.setToolTipText("Itálico");
-
-        FontUnderLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2536_text_underline.png"))); // NOI18N
-        FontUnderLine.setToolTipText("Sublinhado");
-
-        TextAlignLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_left.png"))); // NOI18N
-        TextAlignLeft.setSelected(true);
-        TextAlignLeft.setToolTipText("Alinhamento a Esquerda");
-
-        TextAlignCenter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_center.png"))); // NOI18N
-        TextAlignCenter.setToolTipText("Alinhamento ao Centro");
-
-        TextAlignRigth.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_right.png"))); // NOI18N
-        TextAlignRigth.setToolTipText("Alinhamento a Direita");
-
-        TextAlignJustified.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_justify.png"))); // NOI18N
-        TextAlignJustified.setToolTipText("Alinhamento Justificado");
-
-        FontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/editor_0304_text_foregroundcolor.png"))); // NOI18N
-        FontColor.setToolTipText("Cor da Fonte");
-
-        FontBackColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/editor_0304_text_backgroundcolor.png"))); // NOI18N
-        FontBackColor.setToolTipText("Cor do Fundo");
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(FontName, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FontBold, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(FontItalic, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(FontUnderLine, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(TextAlignLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(TextAlignCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(TextAlignRigth, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(TextAlignJustified, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(FontColor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(FontBackColor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(249, Short.MAX_VALUE))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(FontBold)
-                        .addComponent(FontItalic)
-                        .addComponent(FontUnderLine))
-                    .addComponent(jSeparator3)
-                    .addComponent(TextAlignCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TextAlignRigth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TextAlignLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TextAlignJustified, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(FontBackColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(FontColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(FontSize, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(FontName, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel12Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {FontBackColor, FontBold, FontColor, FontItalic, FontName, FontSize, FontUnderLine, TextAlignCenter, TextAlignJustified, TextAlignLeft, TextAlignRigth});
+        jLabel9.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel9.setText("Mensagem:");
+        jLabel9.setOpaque(true);
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel11Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtSubJect))
-                    .addComponent(pScroll)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(edtSubJect, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -906,9 +814,9 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(edtSubJect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1329,11 +1237,11 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
         }
         
         String htmlText = "";
-        try {htmlText = _htmlPane.getDocument().getText(0, _htmlPane.getDocument().getEndPosition().getOffset());} catch (BadLocationException ba) {}
+        try {htmlText = jMensagem.getDocument().getText(0, jMensagem.getDocument().getEndPosition().getOffset());} catch (BadLocationException ba) {}
         if (htmlText.trim().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "O campo Mensagem não pode ser vazio!");
             btnEnviarTodos.setEnabled(true);
-            _htmlPane.requestFocus();
+            jMensagem.requestFocus();
             return;
         }
 
@@ -1368,25 +1276,42 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             status = tblEmails.getModel().getValueAt(modelRow, 6).toString();
             
             if (!status.equalsIgnoreCase("OK")) {
-                Outlook email = new Outlook();
+                //Outlook email = new Outlook();
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
+                    String Body = jMensagem.getDocument().getText(0,jMensagem.getDocument().getLength());
                     String[] Attachments = attachMent;
-                    email.Send(To, null, Subject, Body, Attachments);
-                    if (!email.isSend()) {
-                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-                    } else {
+                    
+                    Gmail service = GmailAPI.getGmailService();
+                    MimeMessage Mimemessage = createEmailWithAttachment(To,"me",Subject,Body,new File(System.getProperty("user.dir") + "/" + filename));
+                    Message message = createMessageWithEmail(Mimemessage);
+                    message = service.users().messages().send("me", message).execute();
+
+                    System.out.println("Message id: " + message.getId());
+                    System.out.println(message.toPrettyString());
+                    if (message.getId() != null) {
                         conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
                             Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
                         JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
                     }
-                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
-                } catch (Exception ex) {
+                    tblEmails.getModel().setValueAt(message.getId() != null ? "Ok" : "Err", modelRow, 6);
+                        
+//                    email.Send(To, null, Subject, Body, Attachments);
+//                    if (!email.isSend()) {
+//                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+//                    } else {
+//                        conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+//                            Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
+//                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//                    }
+//                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
+                } catch (HeadlessException | IOException | GeneralSecurityException | MessagingException | BadLocationException ex) {
                     ex.printStackTrace();
-                } finally {
-                    email = null;
+                //} finally {
+                //    email = null;
                 }
             }
         }
@@ -1411,11 +1336,11 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
         }
         
         String htmlText = "";
-        try {htmlText = _htmlPane.getDocument().getText(0, _htmlPane.getDocument().getEndPosition().getOffset());} catch (BadLocationException ba) {}
+        try {htmlText = jMensagem.getDocument().getText(0, jMensagem.getDocument().getEndPosition().getOffset());} catch (BadLocationException ba) {}
         if (htmlText.trim().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "O campo Mensagem não pode ser vazio!");
             btnEnviarSelecao.setEnabled(true);
-            _htmlPane.requestFocus();
+            jMensagem.requestFocus();
             return;
         }
 
@@ -1450,25 +1375,42 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
             status = tblEmails.getModel().getValueAt(modelRow, 6).toString();
             
             if (!status.equalsIgnoreCase("OK")) {
-                Outlook email = new Outlook();
+                //Outlook email = new Outlook();
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
-                    String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
+                    String Body = jMensagem.getDocument().getText(0,jMensagem.getDocument().getLength());
                     String[] Attachments = attachMent;
-                    email.Send(To, null, Subject, Body, Attachments);
-                    if (!email.isSend()) {
-                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-                    } else {
+                    
+                    Gmail service = GmailAPI.getGmailService();
+                    MimeMessage Mimemessage = createEmailWithAttachment(To,"me",Subject,Body,new File(System.getProperty("user.dir") + "/" + filename));
+                    Message message = createMessageWithEmail(Mimemessage);
+                    message = service.users().messages().send("me", message).execute();
+
+                    System.out.println("Message id: " + message.getId());
+                    System.out.println(message.toPrettyString());
+                    if (message.getId() != null) {
                         conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
                             Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
                         JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
                     }
-                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
-                } catch (Exception ex) {
+                    tblEmails.getModel().setValueAt(message.getId() != null ? "Ok" : "Err", modelRow, 6);
+                    
+//                    email.Send(To, null, Subject, Body, Attachments);
+//                    if (!email.isSend()) {
+//                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+//                    } else {
+//                        conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+//                            Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
+//                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//                    }
+//                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
+                } catch (HeadlessException | IOException | GeneralSecurityException | MessagingException | BadLocationException ex) {
                     ex.printStackTrace();
-                } finally {
-                    email = null;
+                //} finally {
+                //    email = null;
                 }                                
             }
         }
@@ -3070,21 +3012,10 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner AnoRef;
-    private javax.swing.JButton FontBackColor;
-    private javax.swing.JToggleButton FontBold;
-    private javax.swing.JButton FontColor;
-    private javax.swing.JToggleButton FontItalic;
-    private javax.swing.JComboBox FontName;
-    private javax.swing.JComboBox FontSize;
-    private javax.swing.JToggleButton FontUnderLine;
     private javax.swing.JScrollPane ListaBancosPessoas;
     private javax.swing.JScrollPane ListaBancosPessoasImpressas;
     private javax.swing.JScrollPane ListaBancosPessoasRemessa;
     private javax.swing.JSpinner MesRef;
-    private javax.swing.JToggleButton TextAlignCenter;
-    private javax.swing.JToggleButton TextAlignJustified;
-    private javax.swing.JToggleButton TextAlignLeft;
-    private javax.swing.JToggleButton TextAlignRigth;
     private com.toedter.calendar.JDateChooser VencBoleto;
     private javax.swing.JButton btnEditarCadastro;
     private javax.swing.JButton btnEnviarSelecao;
@@ -3105,12 +3036,13 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JButton jListar;
     private javax.swing.JButton jListarRemessa;
+    private javax.swing.JEditorPane jMensagem;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
@@ -3126,10 +3058,9 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
     private javax.swing.JProgressBar jProgressEmail;
     private javax.swing.JProgressBar jProgressRemessa;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JCheckBox jSemEnvio;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPaneBoletas;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JRadioButton jatrasados;
@@ -3137,601 +3068,8 @@ public class CentralBoletas extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jperiodo;
     private javax.swing.JRadioButton jtodos;
     private javax.swing.JLabel lbl_Status;
-    private javax.swing.JScrollPane pScroll;
     private javax.swing.JTable tblBancosRemessa;
     private javax.swing.JTable tblEmails;
     // End of variables declaration//GEN-END:variables
 
-    // Editor
-    private void EditorEmail() {
-        Action boldAction = new BoldAction();
-        boldAction.putValue(Action.NAME, "");
-        Action italicAction = new ItalicAction();
-        italicAction.putValue(Action.NAME, "");
-        Action underlineAction = new UnderlineAction();
-        underlineAction.putValue(Action.NAME, "");
-
-        Action alignleftAction = new AlignLeftAction();
-        Action alignrightAction = new AlignRightAction();
-        Action aligncenterAction = new AlignCenterAction();
-        Action alignjustifiedAction = new AlignJustifiedAction();
-
-        Action fontsizeAction = new FontSizeAction();
-        Action foregroundAction = new ForegroundAction();
-        Action backgroundAction = new BackgroundAction();
-        Action formatTextAction = new FontAndSizeAction();
-
-        FontBold.setAction(boldAction);
-        FontBold.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2532_text_bold.png")));
-        FontItalic.setAction(italicAction);
-        FontItalic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2533_text_italic.png")));
-        FontUnderLine.setAction(underlineAction);
-        FontUnderLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2536_text_underline.png")));
-
-        TextAlignLeft.setAction(alignleftAction);
-        TextAlignLeft.setText(null);
-        TextAlignLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_left.png")));
-        TextAlignLeft.setToolTipText("Alinhamento a Esquerda");
-
-        TextAlignRigth.setAction(alignrightAction);
-        TextAlignRigth.setText(null);
-        TextAlignRigth.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_right.png")));
-        TextAlignRigth.setToolTipText("Alinhamento a Direita");
-
-        TextAlignCenter.setAction(aligncenterAction);
-        TextAlignCenter.setText(null);
-        TextAlignCenter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_center.png")));
-        TextAlignCenter.setToolTipText("Alinhamento ao Centro");
-
-        TextAlignJustified.setAction(alignjustifiedAction);
-        TextAlignJustified.setText(null);
-        TextAlignJustified.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/webmaster_2531_text_align_justify.png")));
-        TextAlignJustified.setToolTipText("Alinhamento Justificado");
-
-        ListarFontes();
-        FontName.setAction(fontsizeAction);
-        FontName.setToolTipText("Estilo da Fonte");
-        FontSize.setAction(fontsizeAction);
-        FontSize.setToolTipText("Tamanho da Fonte");
-
-        FontColor.setAction(foregroundAction);
-        FontColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/editor_0304_text_foregroundcolor.png")));
-        FontColor.setToolTipText("Cor da Fonte");
-
-        FontBackColor.setAction(backgroundAction);
-        FontBackColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/editor_0304_text_backgroundcolor.png")));
-        FontBackColor.setToolTipText("Cor do Fundo");
-
-        _htmlPane.setEditable(true);
-        pScroll.setViewportView(_htmlPane);
-
-        HTMLEditorKit htmlEditor = new HTMLEditorKit();
-        _htmlPane.setEditorKit(htmlEditor);
-        String aSubject = ""; String aBody = "";
-        //try { aBody = ManipuladorArquivo.leitor("reports/EmailBody.txt"); } catch (IOException ex) {}
-        //try { aSubject = ManipuladorArquivo.leitor("reports/EmailSubJect.txt"); } catch (IOException ex) {}
-        edtSubJect.setText(aSubject);
-        String htmlString = aBody; 
-        Document doc=htmlEditor.createDefaultDocument();
-        //_htmlPane.setContentType("text/plain");
-        _htmlPane.setDocument(doc);
-        _htmlPane.setText(htmlString);
-    }
-
-    
-    class FontSizeAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 584531387732416339L;
-        private String family;
-        private float fontSize;
-
-        public FontSizeAction() {
-            super("Font and Size");
-        }
-
-        public String toString() {
-            return "Font and Size";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = (JEditorPane) getEditor(e);
-            family = (String) FontName.getSelectedItem();
-            fontSize = Float.parseFloat(FontSize.getSelectedItem().toString());
-            MutableAttributeSet attr = null;
-            if (editor != null) {
-                attr = new SimpleAttributeSet();
-                StyleConstants.setFontFamily(attr, family);
-                StyleConstants.setFontSize(attr, (int) fontSize);
-                setCharacterAttributes(editor, attr, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class FontCellRenderer extends DefaultListCellRenderer {
-        public Component getListCellRendererComponent(
-            JList list,
-            Object value,
-            int index,
-            boolean isSelected,
-            boolean cellHasFocus) {
-            JLabel label = (JLabel)super.getListCellRendererComponent(
-                list,value,index,isSelected,cellHasFocus);
-            Font font = new Font((String)value, Font.PLAIN, 20);
-            label.setFont(font);
-            return label;
-        }
-    }
-
-    private void ListarFontes() {
-        GraphicsEnvironment ge = GraphicsEnvironment.
-            getLocalGraphicsEnvironment();
-        String[] fonts = ge.getAvailableFontFamilyNames();
-        for (String f : fonts) {
-            FontName.addItem(f);
-        }
-        FontName.setRenderer(new FontCellRenderer());
-        //FontName.setSelectedItem(family);
-    }
-
-    class AlignJustifiedAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 1749670038684056758L;
-
-        public AlignJustifiedAction() {
-            super("align-justified");
-        }
-
-        public String toString() {
-            return "AlignJustified";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setAlignment(sas, StyleConstants.ALIGN_JUSTIFIED);
-                setParagraphAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class AlignCenterAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 1749670038684056758L;
-
-        public AlignCenterAction() {
-            super("align-center");
-        }
-
-        public String toString() {
-            return "AlignCenter";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setAlignment(sas, StyleConstants.ALIGN_CENTER);
-                setParagraphAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class AlignRightAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 1749670038684056758L;
-
-        public AlignRightAction() {
-            super("align-right");
-        }
-
-        public String toString() {
-            return "AlignRight";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setAlignment(sas, StyleConstants.ALIGN_RIGHT);
-                setParagraphAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class AlignLeftAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 1749670038684056758L;
-
-        public AlignLeftAction() {
-            super("align-left");
-        }
-
-        public String toString() {
-            return "AlignLeft";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setAlignment(sas, StyleConstants.ALIGN_LEFT);
-                setParagraphAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class UnderlineAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 1794670038684056758L;
-
-        public UnderlineAction() {
-            super("font-underline");
-        }
-
-        public String toString() {
-            return "Underline";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                boolean underline = (StyleConstants.isUnderline(attr)) ? false : true;
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setUnderline(sas, underline);
-                setCharacterAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class BoldAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 9174670038684056758L;
-
-        public BoldAction() {
-            super("font-bold");
-        }
-
-        public String toString() {
-            return "Bold";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                boolean bold = (StyleConstants.isBold(attr)) ? false : true;
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setBold(sas, bold);
-                setCharacterAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class ItalicAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = -1428340091100055456L;
-
-        public ItalicAction() {
-            super("font-italic");
-        }
-
-        public String toString() {
-            return "Italic";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = getEditor(e);
-            if (editor != null) {
-                StyledEditorKit kit = getStyledEditorKit(editor);
-                MutableAttributeSet attr = kit.getInputAttributes();
-                boolean italic = (StyleConstants.isItalic(attr)) ? false : true;
-                SimpleAttributeSet sas = new SimpleAttributeSet();
-                StyleConstants.setItalic(sas, italic);
-                setCharacterAttributes(editor, sas, false);
-                editor.requestFocus();
-            }
-        }
-    }
-
-    class ForegroundAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 6384632651737400352L;
-        JColorChooser colorChooser = new JColorChooser();
-        JDialog dialog = new JDialog();
-        boolean noChange = false;
-        boolean cancelled = false;
-
-        public ForegroundAction() {
-            super("");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = (JEditorPane) getEditor(e);
-            if (editor == null) {
-                JOptionPane.showMessageDialog(null,
-                    "You need to select the editor pane before you can change the color.", "Error",
-                JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            int p0 = editor.getSelectionStart();
-            StyledDocument doc = getStyledDocument(editor);
-            Element paragraph = doc.getCharacterElement(p0);
-            AttributeSet as = paragraph.getAttributes();
-            fg = StyleConstants.getForeground(as);
-            if (fg == null) {
-                fg = Color.BLACK;
-            }
-            colorChooser.setColor(fg);
-            JButton accept = new JButton("OK");
-            accept.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    fg = colorChooser.getColor();
-                    dialog.dispose();
-                }
-            });
-            JButton cancel = new JButton("Cancel");
-            cancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                   cancelled = true;
-                    dialog.dispose();
-                }
-            });
-            JButton none = new JButton("None");
-            none.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    noChange = true;
-                    dialog.dispose();
-                }
-            });
-            JPanel buttons = new JPanel();
-            buttons.add(accept);
-            buttons.add(none);
-            buttons.add(cancel);
-            dialog.getContentPane().setLayout(new BorderLayout());
-            dialog.getContentPane().add(colorChooser, BorderLayout.CENTER);
-            dialog.getContentPane().add(buttons, BorderLayout.SOUTH);
-            dialog.setModal(true);
-            dialog.pack();
-            dialog.setVisible(true);
-            if (!cancelled) {
-                MutableAttributeSet attr = null;
-                if (editor != null) {
-                    if (fg != null && !noChange) {
-                        attr = new SimpleAttributeSet();
-                        StyleConstants.setForeground(attr, fg);
-                        setCharacterAttributes(editor, attr, false);
-                    }
-                }
-            }// end if color != null
-            noChange = false;
-            cancelled = false;
-        }
-        private Color fg;
-    }
-
-    class FontAndSizeAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 584531387732416339L;
-        private String family;
-        private float fontSize;
-        JDialog formatText;
-        private boolean accept = false;
-        JComboBox fontFamilyChooser;
-        JComboBox fontSizeChooser;
-
-        public FontAndSizeAction() {
-            super("Font and Size");
-        }
-
-        public String toString() {
-            return "Font and Size";
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = (JEditorPane) getEditor(e);
-            int p0 = editor.getSelectionStart();
-            StyledDocument doc = getStyledDocument(editor);
-            Element paragraph = doc.getCharacterElement(p0);
-            AttributeSet as = paragraph.getAttributes();
-            family = StyleConstants.getFontFamily(as);
-            fontSize = StyleConstants.getFontSize(as);
-            formatText = new JDialog(new JFrame(), "Font and Size", true);
-            formatText.getContentPane().setLayout(new BorderLayout());
-            JPanel choosers = new JPanel();
-            choosers.setLayout(new GridLayout(2, 1));
-            JPanel fontFamilyPanel = new JPanel();
-            fontFamilyPanel.add(new JLabel("Font"));
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            String[] fontNames = ge.getAvailableFontFamilyNames();
-            fontFamilyChooser = new JComboBox();
-            for (int i = 0; i < fontNames.length; i++) {
-                fontFamilyChooser.addItem(fontNames[i]);
-            }
-            fontFamilyChooser.setSelectedItem(family);
-            fontFamilyPanel.add(fontFamilyChooser);
-            choosers.add(fontFamilyPanel);
-            JPanel fontSizePanel = new JPanel();
-            fontSizePanel.add(new JLabel("Size"));
-            fontSizeChooser = new JComboBox();
-            fontSizeChooser.setEditable(true);
-            fontSizeChooser.addItem(new Float(4));
-            fontSizeChooser.addItem(new Float(8));
-            fontSizeChooser.addItem(new Float(12));
-            fontSizeChooser.addItem(new Float(16));
-            fontSizeChooser.addItem(new Float(20));
-            fontSizeChooser.addItem(new Float(24));
-            fontSizeChooser.setSelectedItem(new Float(fontSize));
-            fontSizePanel.add(fontSizeChooser);
-            choosers.add(fontSizePanel);
-            JButton ok = new JButton("OK");
-            ok.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    accept = true;
-                    formatText.dispose();
-                    family = (String) fontFamilyChooser.getSelectedItem();
-                    fontSize = Float.parseFloat(fontSizeChooser.getSelectedItem().toString());
-                }
-            });
-            JButton cancel = new JButton("Cancel");
-            cancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    formatText.dispose();
-                }
-            });
-            JPanel buttons = new JPanel();
-            buttons.add(ok);
-            buttons.add(cancel);
-            formatText.getContentPane().add(choosers, BorderLayout.CENTER);
-            formatText.getContentPane().add(buttons, BorderLayout.SOUTH);
-            formatText.pack();
-            formatText.setVisible(true);
-            MutableAttributeSet attr = null;
-            if (editor != null && accept) {
-                attr = new SimpleAttributeSet();
-                StyleConstants.setFontFamily(attr, family);
-                StyleConstants.setFontSize(attr, (int) fontSize);
-                setCharacterAttributes(editor, attr, false);
-            }
-        }
-    }
-
-    class UndoListener implements UndoableEditListener {
-        public void undoableEditHappened(UndoableEditEvent e) {
-            undoManager.addEdit(e.getEdit());
-            undoAction.update();
-            redoAction.update();
-        }   
-    }
-
-    class UndoAction extends AbstractAction {
-        public UndoAction() {
-            this.putValue(Action.NAME, undoManager.getUndoPresentationName());
-            this.setEnabled(false);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if (this.isEnabled()) {
-                undoManager.undo();
-                undoAction.update();
-                redoAction.update();
-            }
-        }
-
-        public void update() {
-            this.putValue(Action.NAME, undoManager.getUndoPresentationName());
-            this.setEnabled(undoManager.canUndo());
-        }
-    }
-
-    class RedoAction extends AbstractAction {
-        public RedoAction() {
-            this.putValue(Action.NAME, undoManager.getRedoPresentationName());
-            this.setEnabled(false);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if (this.isEnabled()) {
-                undoManager.redo();
-                undoAction.update();
-                redoAction.update();
-            }
-        }
-
-        public void update() {
-            this.putValue(Action.NAME, undoManager.getRedoPresentationName());
-            this.setEnabled(undoManager.canRedo());
-        }
-    }
-
-    class BackgroundAction extends StyledEditorKit.StyledTextAction {
-        private static final long serialVersionUID = 3684632651737400352L;
-        JColorChooser colorChooser = new JColorChooser();
-        JDialog dialog = new JDialog();
-        boolean noChange = false;
-        boolean cancelled = false;
-
-        public BackgroundAction() {
-            super("");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            JEditorPane editor = (JEditorPane) getEditor(e);
-            if (editor == null) {
-                JOptionPane.showMessageDialog(null,
-                    "You need to select the editor pane before you can change the color.", "Error",
-                JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            int p0 = editor.getSelectionStart();
-            StyledDocument doc = getStyledDocument(editor);
-            Element paragraph = doc.getCharacterElement(p0);
-            AttributeSet as = paragraph.getAttributes();
-            fg = StyleConstants.getBackground(as);
-            if (fg == null) {
-                fg = Color.BLACK;
-            }
-            colorChooser.setColor(fg);
-            JButton accept = new JButton("OK");
-            accept.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    fg = colorChooser.getColor();
-                    dialog.dispose();
-                }
-            });
-            JButton cancel = new JButton("Cancel");
-            cancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                   cancelled = true;
-                    dialog.dispose();
-                }
-            });
-            JButton none = new JButton("None");
-            none.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    noChange = true;
-                    dialog.dispose();
-                }
-            });
-            JPanel buttons = new JPanel();
-            buttons.add(accept);
-            buttons.add(none);
-            buttons.add(cancel);
-            dialog.getContentPane().setLayout(new BorderLayout());
-            dialog.getContentPane().add(colorChooser, BorderLayout.CENTER);
-            dialog.getContentPane().add(buttons, BorderLayout.SOUTH);
-            dialog.setModal(true);
-            dialog.pack();
-            dialog.setVisible(true);
-            if (!cancelled) {
-                MutableAttributeSet attr = null;
-                if (editor != null) {
-                    if (fg != null && !noChange) {
-                        attr = new SimpleAttributeSet();
-                        StyleConstants.setBackground(attr, fg);
-                        setCharacterAttributes(editor, attr, false);
-                    }
-                }
-            }// end if color != null
-            noChange = false;
-            cancelled = false;
-        }
-        private Color fg;
-    }
 }
-
-
-        //        bancosBoleta = new ArrayList<BancosBoleta>();
-        //        BoletaTreeTableModel boletaTreeTableModel = new BoletaTreeTableModel(bancosBoleta);
-        //        treeTable = new JXTreeTable(boletaTreeTableModel);
-        //        treeTable.repaint();
-        //        ListaBancosPessoas.setViewportView(treeTable);
-        //        ListaBancosPessoas.repaint();

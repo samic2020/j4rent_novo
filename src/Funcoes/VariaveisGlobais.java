@@ -5,6 +5,7 @@
 
 package Funcoes;
 
+import static Funcoes.gmail.GmailAPI.ReadJSon;
 import Movimento.jRecebtos;
 import Movimento.jRecebtos_fake;
 import j4rent.Locatarios.jLocatarios;
@@ -12,6 +13,7 @@ import j4rent.Partida.Collections;
 import j4rent.jProprietarios;
 import java.sql.ResultSet;
 import javax.swing.JDesktopPane;
+import org.json.JSONException;
 
 /**
  *
@@ -203,6 +205,18 @@ public class VariaveisGlobais {
     public static String sitePwd = "";
     public static String siteDbName = "";
     
+    // parametros de conecxão de email
+    public static String CLIENT_ID;
+    public static String PROJECT_ID; 
+    public static String AUTH_URI;
+    public static String TOKEN_URI; 
+    public static String AUTH_PROVIDER_X509_CERT_URL;
+    public static String CLIENT_SECRET;
+    public static String REDIRECT_URIS;
+    public static String AUTH_CODE;
+    public static String ACCESS_TOKEN;
+    public static String REFRESH_TOKEN;
+        
     public static void LerConf() {
         VariaveisGlobais.myLogo = System.getProperty("myLogo", "resources/login.jpg");
         
@@ -264,6 +278,6 @@ public class VariaveisGlobais {
         
         VariaveisGlobais.bloqAdianta = Boolean.valueOf(System.getProperty("bloqAdianta", "false"));
         
-        VariaveisGlobais.dimob = Boolean.valueOf(System.getProperty("Dimob", "false"));
+        VariaveisGlobais.dimob = Boolean.valueOf(System.getProperty("Dimob", "false"));        
     }
 }

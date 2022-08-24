@@ -13,26 +13,36 @@ package Movimento;
 import Funcoes.ApplicationPath;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
-import Funcoes.Outlook;
+//import Funcoes.Outlook;
 import Funcoes.TableControl;
 import Funcoes.VariaveisGlobais;
+import Funcoes.gmail.GmailAPI;
+import static Funcoes.gmail.GmailOperations.createEmailWithAttachment;
+import static Funcoes.gmail.GmailOperations.createMessageWithEmail;
 import Funcoes.toPreview;
 import Funcoes.toPrint2;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.PatternSyntaxException;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -479,22 +489,36 @@ protected static String[] carregaDados(String DADOS) {
         int modelRow = jtbFiles.convertRowIndexToModel(selRow);
         String rdoc = (String) jtbFiles.getModel().getValueAt(modelRow, 0);
         
-        Outlook email = new Outlook(true);
+        //Outlook email = new Outlook(true);
         try {            
             String To = jPara.getText().trim().toLowerCase();
             String Subject = jSubject.getText().trim();
             String Body = jMensagem.getDocument().getText(0, jMensagem.getDocument().getLength());
             String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + pasta + rdoc};
-            email.Send(To, null, Subject, Body, Attachments);
-            if (!email.isSend()) {
-                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-            } else {
+            
+            Gmail service = GmailAPI.getGmailService();
+            MimeMessage Mimemessage = createEmailWithAttachment(To,"me",Subject,Body,new File(System.getProperty("user.dir") + "/" + pasta + rdoc));
+            Message message = createMessageWithEmail(Mimemessage);
+            message = service.users().messages().send("me", message).execute();
+
+            System.out.println("Message id: " + message.getId());
+            System.out.println(message.toPrettyString());
+            if (message.getId() != null) {
                 JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
+            
+//            email.Send(To, null, Subject, Body, Attachments);
+//            if (!email.isSend()) {
+//                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//            }
+        } catch (HeadlessException | IOException | GeneralSecurityException | MessagingException | BadLocationException ex) {
             ex.printStackTrace();
-        } finally {
-            email = null;
+        //} finally {
+        //    email = null;
         }
     }//GEN-LAST:event_jbtSendActionPerformed
 

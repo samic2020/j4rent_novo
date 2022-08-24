@@ -18,6 +18,7 @@ import Funcoes.FuncoesGlobais;
 import Funcoes.VariaveisGlobais;
 import Funcoes.ResizeImageIcon;
 import Funcoes.TableControl;
+import static Funcoes.gmail.GmailAPI.ReadJSon;
 import java.awt.AWTKeyStroke;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionListener;
@@ -38,6 +39,7 @@ import javax.swing.Timer;
 import java.awt.Color;
 import java.awt.Dimension;
 import mondrian.rolap.Test;
+import org.json.JSONException;
 /**
  *
  * @author supervisor
@@ -81,6 +83,12 @@ public final class NewMenu extends javax.swing.JFrame {
 //        }
         
         InicializaVariaveis();
+        try {
+            // Leitura dos parametros gmail
+            ReadJSon();
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
 
         // Setar menu
         //SetMenu();

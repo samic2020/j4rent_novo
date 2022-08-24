@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rImvVazio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d8c3f767-c9a2-4985-be6b-d6f85073982b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT i.situacao, p.rgprp, p.nome, p.tipoprop, i.rgimv, i.`end`, i.num, i.compl, i.bairro, i.cidade, i.estado, i.cep FROM proprietarios p, imoveis i WHERE p.rgprp = i.rgprp AND Upper(Trim(i.situacao)) = 'VAZIO' AND Upper(Trim(p.status)) = 'ATIVO' ORDER BY i.rgimv;]]>
+	</queryString>
+	<field name="situacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgprp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoprop" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rgimv" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="end" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="num" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="compl" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="prop">
+		<groupExpression><![CDATA[$F{rgprp}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<rectangle radius="0">
+					<reportElement uuid="9556873b-4cc9-4388-be09-29de30a745f8" x="0" y="0" width="555" height="14" backcolor="#A5A6E6"/>
+				</rectangle>
+				<textField>
+					<reportElement uuid="e668866f-4b63-4307-80f2-8c9d8ee22ea7" x="69" y="0" width="52" height="14"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{rgprp}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="cae8be15-0b5b-4a3b-9119-f9b675c10a3f" x="121" y="0" width="394" height="14"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="f7aa176c-2b3b-4e85-aae2-e0071a96053a" x="0" y="0" width="69" height="14"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Locador:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="25f875e9-cd30-4290-89be-5a167e9ac4ac" x="0" y="0" width="177" height="60"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="7f97e4c3-5fb0-43fd-86ef-87ff449d1cb4" x="177" y="0" width="378" height="44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE LOCADORES E SEUS IMÓVEIS VAZIOS]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="ffa08c6c-63c1-4948-bdc9-b2b932384819" x="0" y="64" width="156" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cca844cb-515c-4d05-bf78-142f762a75ce" x="435" y="64" width="80" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="61e44e5d-e487-457b-b7e5-83ffc504b163" x="515" y="64" width="40" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="9036b15e-8756-4422-b950-3cf9c85c34ea" x="0" y="78" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="9d07ecbb-ee57-4d63-ae2d-07b74292eec3" mode="Opaque" x="0" y="0" width="555" height="24" forecolor="#FFFFFF" backcolor="#D5DFEC">
+					<printWhenExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement uuid="7902b91a-e0f5-461e-88f9-928e0bc34db0" x="0" y="0" width="52" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgimv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8f8d4d1c-6737-46c5-8bcc-32185020e6e1" x="52" y="0" width="263" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{end}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1fe4ae87-e3d4-4584-b3f5-f8a25f5b4950" x="315" y="0" width="67" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0a0e764e-7705-4980-8aff-2fd229a1c626" x="382" y="0" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compl}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="75f8cbc1-2122-44ea-b16a-c741782c338d" x="0" y="12" width="194" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="363b3acf-8e28-4ed8-b24d-3c08c0a8f4e7" x="194" y="12" width="212" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6862f5d3-224b-4a52-95da-f3b6afdda5ec" x="406" y="12" width="40" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="94c0bfa4-10fc-4311-90a6-4a8c908b9d84" x="482" y="12" width="73" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -682,11 +682,11 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel7" max="32767" attributes="0"/>
+                          <Component id="jPanel7" pref="842" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="ListaBancosPessoasRemessa" min="-2" pref="593" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel14" max="32767" attributes="0"/>
+                              <Component id="jPanel14" pref="243" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -877,7 +877,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jListarRemessa" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace pref="88" max="32767" attributes="0"/>
+                          <EmptySpace pref="100" max="32767" attributes="0"/>
                           <Component id="btnGerarRemessa" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jProgressRemessa" min="-2" max="-2" attributes="0"/>
@@ -1059,7 +1059,7 @@
                           <Component id="btnListarBoletasEmail" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSemEnvio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="5" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnEnviarTodos" min="-2" pref="36" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnEnviarSelecao" min="-2" pref="36" max="-2" attributes="0"/>
@@ -1135,16 +1135,16 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jScrollPane4" alignment="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="edtSubJect" max="32767" attributes="0"/>
+                                  <Component id="edtSubJect" pref="774" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="pScroll" max="32767" attributes="0"/>
-                              <Component id="jPanel12" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -1159,9 +1159,9 @@
                               <Component id="edtSubJect" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel12" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pScroll" pref="130" max="32767" attributes="0"/>
+                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          <Component id="jScrollPane4" pref="159" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1175,185 +1175,29 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtSubJect">
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel12">
+                <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
 
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="FontName" min="-2" pref="214" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="FontSize" min="-2" pref="61" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="FontBold" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="FontItalic" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="FontUnderLine" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                              <Component id="TextAlignLeft" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="TextAlignCenter" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="TextAlignRigth" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="TextAlignJustified" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="FontColor" min="-2" pref="25" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="FontBackColor" min="-2" pref="26" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="249" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="FontBold" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="FontItalic" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="FontUnderLine" linkSize="1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="TextAlignCenter" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="TextAlignRigth" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="TextAlignLeft" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="TextAlignJustified" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="FontBackColor" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="FontColor" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="FontSize" linkSize="1" pref="25" max="32767" attributes="0"/>
-                                  <Component id="FontName" linkSize="1" pref="25" max="32767" attributes="0"/>
-                                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JComboBox" name="FontName">
+                    <Component class="javax.swing.JEditorPane" name="jMensagem">
                       <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="0"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Tipo da Fonte"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="FontSize">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="15">
-                            <StringItem index="0" value="6"/>
-                            <StringItem index="1" value="7"/>
-                            <StringItem index="2" value="8"/>
-                            <StringItem index="3" value="10"/>
-                            <StringItem index="4" value="12"/>
-                            <StringItem index="5" value="14"/>
-                            <StringItem index="6" value="16"/>
-                            <StringItem index="7" value="18"/>
-                            <StringItem index="8" value="20"/>
-                            <StringItem index="9" value="22"/>
-                            <StringItem index="10" value="24"/>
-                            <StringItem index="11" value="26"/>
-                            <StringItem index="12" value="32"/>
-                            <StringItem index="13" value="64"/>
-                            <StringItem index="14" value="72"/>
-                          </StringArray>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Tamanho da Fonte"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="FontBold">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2532_text_bold.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Negrito"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="FontItalic">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2533_text_italic.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="It&#xe1;lico"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="FontUnderLine">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2536_text_underline.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Sublinhado"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSeparator" name="jSeparator3">
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="TextAlignLeft">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2531_text_align_left.png"/>
-                        </Property>
-                        <Property name="selected" type="boolean" value="true"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Alinhamento a Esquerda"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="TextAlignCenter">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2531_text_align_center.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Alinhamento ao Centro"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="TextAlignRigth">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2531_text_align_right.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Alinhamento a Direita"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="TextAlignJustified">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/webmaster_2531_text_align_justify.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Alinhamento Justificado"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="FontColor">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/editor_0304_text_foregroundcolor.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Cor da Fonte"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="FontBackColor">
-                      <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/Icones/editor_0304_text_backgroundcolor.png"/>
-                        </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Cor do Fundo"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSeparator" name="jSeparator1">
-                      <Properties>
-                        <Property name="orientation" type="int" value="1"/>
+                        <Property name="contentType" type="java.lang.String" value="&quot;text/html&quot;" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JScrollPane" name="pScroll">
-
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                </Container>
+                <Component class="javax.swing.JLabel" name="jLabel9">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="cc" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Mensagem:"/>
+                    <Property name="opaque" type="boolean" value="true"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

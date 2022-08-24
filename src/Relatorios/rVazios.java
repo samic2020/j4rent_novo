@@ -16,7 +16,9 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 
@@ -212,9 +214,12 @@ public class rVazios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnPreviewActionPerformed
 
     private void RelVazios() {
+        Map parametros = new HashMap();
+        parametros.put("logo", System.getProperty("user.dir") + "/" + "resources/logos/boleta/" + VariaveisGlobais.marca.trim() + ".gif");
+        
         try {
-            String fileName = "reports/rVazios.jasper";
-            JasperPrint print = JasperFillManager.fillReport(fileName, null, conn.conn);
+            String fileName = "reports/rImvVazio.jasper";    //"reports/rVazios.jasper";
+            JasperPrint print = JasperFillManager.fillReport(fileName, parametros, conn.conn);
 
             // Create a PDF exporter
             JRExporter exporter = new JRPdfExporter();

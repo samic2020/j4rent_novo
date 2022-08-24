@@ -5,8 +5,18 @@
 package Movimento;
 
 import Funcoes.*;
+import static Funcoes.gmail.GmailAPI.AuthGmail;
+import static Funcoes.gmail.GmailAPI.LoadGmailJSon;
+import static Funcoes.gmail.GmailAPI.ReadJSon;
+import static Funcoes.gmail.GmailAPI.openWebpage;
 import Protocolo.DepuraCampos;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -20,6 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import org.json.JSONException;
 
 /**
  *
@@ -53,6 +64,19 @@ public class jADMParametros extends javax.swing.JInternalFrame {
             LerMensagens();
         } catch (SQLException ex) {
             Logger.getLogger(jADMParametros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Liga Abas de configuração de email caso não esteja configurado
+        File filePath = new File(System.getProperty("user.dir") + "\\cert\\" + VariaveisGlobais.dCliente.get("marca").trim() + "_credentials.json");
+        {
+            // Aba GMail
+            jTabbedGmail.setEnabled(!filePath.exists());
+            jPanelGmail.setEnabled(!filePath.exists());
+            BtnGoogleConsole.setEnabled(!filePath.exists());
+            gCredentialsFile.setEnabled(!filePath.exists());
+            BtnGenerateCode.setEnabled(!filePath.exists());
+            gAuthCode.setEnabled(!filePath.exists());
+            BtnGenerateCredentialsFile.setEnabled(!filePath.exists());
         }
         
         new SimpleThread().start();
@@ -273,6 +297,7 @@ public class jADMParametros extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel14 = new javax.swing.JPanel();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jAbasCalculos = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jMALUG = new javax.swing.JCheckBox();
@@ -467,6 +492,20 @@ public class jADMParametros extends javax.swing.JInternalFrame {
         jLabel51 = new javax.swing.JLabel();
         jCabDoc = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
+        jPanel17 = new javax.swing.JPanel();
+        jTabbedGmail = new javax.swing.JTabbedPane();
+        jPanelGmail = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        BtnGenerateCode = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        gAuthCode = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        BtnGenerateCredentialsFile = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        BtnGoogleConsole = new javax.swing.JButton();
+        jLabel32 = new javax.swing.JLabel();
+        gCredentialsFile = new javax.swing.JTextField();
         jbtGravarParametros = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -1262,6 +1301,7 @@ public class jADMParametros extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel59.setBackground(java.awt.SystemColor.activeCaption);
         jLabel59.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Figuras/pix-logo_24x24.png"))); // NOI18N
         jLabel59.setText(" .:: Bancos PIX");
         jLabel59.setOpaque(true);
@@ -1430,7 +1470,7 @@ public class jADMParametros extends javax.swing.JInternalFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(c_btgravar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(c_vrmaxch))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Feriados e dias sem funcionamento"));
@@ -1638,7 +1678,7 @@ public class jADMParametros extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1872,6 +1912,121 @@ public class jADMParametros extends javax.swing.JInternalFrame {
         );
 
         jTabbedPane2.addTab("Mensagens do Boleto", jPanel16);
+
+        jPanelGmail.setBackground(new java.awt.Color(255, 255, 204));
+
+        jLabel27.setText("File:");
+
+        BtnGenerateCode.setText("Gerar");
+        BtnGenerateCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGenerateCodeActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setText("* - 3º Copie e Cole o Code da página para aqui.");
+
+        jLabel29.setText("Code:");
+
+        jLabel30.setText("* - 4º Gere aqui seu arquivo credentials.json.");
+
+        BtnGenerateCredentialsFile.setText("Gerar");
+        BtnGenerateCredentialsFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGenerateCredentialsFileActionPerformed(evt);
+            }
+        });
+
+        jLabel31.setText("* - 1º Crie o Projeto e baixe o arquivo .json");
+
+        BtnGoogleConsole.setText("Google Console");
+        BtnGoogleConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGoogleConsoleActionPerformed(evt);
+            }
+        });
+
+        jLabel32.setText("* - 2º Selecio o arquivo .json baixado para poder Autorizar e Criar o Code.");
+
+        javax.swing.GroupLayout jPanelGmailLayout = new javax.swing.GroupLayout(jPanelGmail);
+        jPanelGmail.setLayout(jPanelGmailLayout);
+        jPanelGmailLayout.setHorizontalGroup(
+            jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGmailLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelGmailLayout.createSequentialGroup()
+                            .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGmailLayout.createSequentialGroup()
+                                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(19, 19, 19)
+                                    .addComponent(BtnGoogleConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnGenerateCredentialsFile))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGmailLayout.createSequentialGroup()
+                            .addComponent(jLabel29)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(gAuthCode, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGmailLayout.createSequentialGroup()
+                            .addComponent(jLabel27)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(gCredentialsFile, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(BtnGenerateCode)
+                            .addGap(2, 2, 2))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelGmailLayout.setVerticalGroup(
+            jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGmailLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(BtnGoogleConsole))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gCredentialsFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27)
+                    .addComponent(BtnGenerateCode))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gAuthCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelGmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(BtnGenerateCredentialsFile))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+
+        jTabbedGmail.addTab("GMail", jPanelGmail);
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Email", jPanel17);
 
         jbtGravarParametros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Figuras/ok.png"))); // NOI18N
         jbtGravarParametros.setText("Gravar Parametros");
@@ -2200,6 +2355,39 @@ public class jADMParametros extends javax.swing.JInternalFrame {
             LerBancoPix();
         }
     }//GEN-LAST:event_pixBancoFocusLost
+
+    private void BtnGoogleConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGoogleConsoleActionPerformed
+        try {
+            // Abrir página no navegador padrão: https://console.developers.google.com/
+            openWebpage(new URL("https://console.developers.google.com/"));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(jADMParametros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnGoogleConsoleActionPerformed
+
+    private void BtnGenerateCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGenerateCodeActionPerformed
+        try {
+            AuthGmail(gCredentialsFile.getText());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(jADMParametros.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(jADMParametros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnGenerateCodeActionPerformed
+
+    private void BtnGenerateCredentialsFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGenerateCredentialsFileActionPerformed
+        try {
+            LoadGmailJSon(gCredentialsFile.getText(), gAuthCode.getText());
+        } catch (IOException | GeneralSecurityException ex) {
+            Logger.getLogger(jADMParametros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            ReadJSon();
+        } catch (JSONException ex) {
+            Logger.getLogger(jADMParametros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BtnGenerateCredentialsFileActionPerformed
 
     private void LerMensagens() throws SQLException {
         try {
@@ -2713,6 +2901,9 @@ public class jADMParametros extends javax.swing.JInternalFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnGenerateCode;
+    private javax.swing.JButton BtnGenerateCredentialsFile;
+    private javax.swing.JButton BtnGoogleConsole;
     private javax.swing.JButton a_btadc;
     private javax.swing.JButton a_btdel;
     private javax.swing.JButton a_btsave;
@@ -2744,6 +2935,8 @@ public class jADMParametros extends javax.swing.JInternalFrame {
     private javax.swing.JButton e_btdel;
     private javax.swing.JButton e_btupdate;
     private javax.swing.JFormattedTextField extMax;
+    private javax.swing.JTextField gAuthCode;
+    private javax.swing.JTextField gCredentialsFile;
     private javax.swing.JTabbedPane jAbasCalculos;
     private javax.swing.JTextField jAgencia;
     private javax.swing.JCheckBox jCALUG;
@@ -2792,7 +2985,13 @@ public class jADMParametros extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
@@ -2845,6 +3044,7 @@ public class jADMParametros extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
@@ -2856,6 +3056,7 @@ public class jADMParametros extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelGmail;
     private javax.swing.JLabel jSG;
     private javax.swing.JScrollPane jScroll;
     private javax.swing.JScrollPane jScrollPane1;
@@ -2872,6 +3073,8 @@ public class jADMParametros extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox jTMULTA;
     private javax.swing.JCheckBox jTSEGURO;
     private javax.swing.JCheckBox jTTAXA;
+    private javax.swing.JTabbedPane jTabbedGmail;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JSpinner jTipo;
     private javax.swing.JTextField jbanco;

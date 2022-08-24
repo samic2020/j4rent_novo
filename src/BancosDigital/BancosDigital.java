@@ -10,10 +10,13 @@ import Funcoes.Dates;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
 import Funcoes.LerValor;
-import Funcoes.Outlook;
+//import Funcoes.Outlook;
 import Funcoes.StringManager;
 import Funcoes.TableControl;
 import Funcoes.VariaveisGlobais;
+import Funcoes.gmail.GmailAPI;
+import static Funcoes.gmail.GmailOperations.createEmailWithAttachment;
+import static Funcoes.gmail.GmailOperations.createMessageWithEmail;
 import Funcoes.jDirectory;
 import Funcoes.jTableControl;
 import Movimento.BoletasCentral.BancosBoleta;
@@ -25,6 +28,8 @@ import Protocolo.DivideCC;
 import Protocolo.ReCalculos;
 import j4rent.Partida.Collections;
 import boleta.Boleta;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,6 +37,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -39,8 +45,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -51,6 +60,8 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListCellRenderer;
@@ -2187,25 +2198,42 @@ public class BancosDigital extends javax.swing.JInternalFrame {
             status = tblEmails.getModel().getValueAt(modelRow, 6).toString();
 
             if (!status.equalsIgnoreCase("OK")) {
-                Outlook email = new Outlook();
+                //Outlook email = new Outlook();
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
                     String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
                     String[] Attachments = attachMent;
-                    email.Send(To, null, Subject, Body, Attachments);
-                    if (!email.isSend()) {
-                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-                    } else {
+
+                    Gmail service = GmailAPI.getGmailService();
+                    MimeMessage Mimemessage = createEmailWithAttachment(To,"me",Subject,Body,new File(System.getProperty("user.dir") + "/" + filename));
+                    Message message = createMessageWithEmail(Mimemessage);
+                    message = service.users().messages().send("me", message).execute();
+
+                    System.out.println("Message id: " + message.getId());
+                    System.out.println(message.toPrettyString());
+                    if (message.getId() != null) {
                         conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
                             Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
                         JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
                     }
-                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
-                } catch (Exception ex) {
+                    tblEmails.getModel().setValueAt(message.getId() != null ? "Ok" : "Err", modelRow, 6);
+                    
+//                    email.Send(To, null, Subject, Body, Attachments);
+//                    if (!email.isSend()) {
+//                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+//                    } else {
+//                        conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+//                            Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
+//                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//                    }
+//                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
+                } catch (HeadlessException | IOException | GeneralSecurityException | MessagingException | BadLocationException ex) {
                     ex.printStackTrace();
-                } finally {
-                    email = null;
+                //} finally {
+                //    email = null;
                 }
             }
             
@@ -2276,25 +2304,42 @@ public class BancosDigital extends javax.swing.JInternalFrame {
             status = tblEmails.getModel().getValueAt(modelRow, 6).toString();
 
             if (!status.equalsIgnoreCase("OK")) {
-                Outlook email = new Outlook();
+                //Outlook email = new Outlook();
                 try {            
                     String To = EmailLoca.trim().toLowerCase();
                     String Subject = edtSubJect.getText().trim();
                     String Body = _htmlPane.getDocument().getText(0,_htmlPane.getDocument().getLength());
                     String[] Attachments = attachMent;
-                    email.Send(To, null, Subject, Body, Attachments);
-                    if (!email.isSend()) {
-                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-                    } else {
+                    
+                    Gmail service = GmailAPI.getGmailService();
+                    MimeMessage Mimemessage = createEmailWithAttachment(To,"me",Subject,Body,new File(System.getProperty("user.dir") + "/" + filename));
+                    Message message = createMessageWithEmail(Mimemessage);
+                    message = service.users().messages().send("me", message).execute();
+
+                    System.out.println("Message id: " + message.getId());
+                    System.out.println(message.toPrettyString());
+                    if (message.getId() != null) {
                         conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
                             Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
                         JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
                     }
-                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
-                } catch (Exception ex) {
+                    tblEmails.getModel().setValueAt(message.getId() != null ? "Ok" : "Err", modelRow, 6);
+                    
+//                    email.Send(To, null, Subject, Body, Attachments);
+//                    if (!email.isSend()) {
+//                        JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+//                    } else {
+//                        conn.ExecutarComando("UPDATE recibo SET emailbol = 'S' WHERE contrato = '" + contrato + "' AND dtvencimento = '" +
+//                            Dates.StringtoString(vencto, "dd/MM/yyyy", "yyyy/MM/dd") + "';");
+//                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//                    }
+//                    tblEmails.getModel().setValueAt(email.isSend() ? "Ok" : "Err", modelRow, 6);
+                } catch (HeadlessException | IOException | GeneralSecurityException | MessagingException | BadLocationException ex) {
                     ex.printStackTrace();
-                } finally {
-                    email = null;
+                //} finally {
+                //    email = null;
                 }                
             }
             int pgs = ((b++ * 100) / rcount) + 1;

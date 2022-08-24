@@ -12,7 +12,12 @@
 package Movimento;
 
 import Funcoes.*;
+import Funcoes.gmail.GmailAPI;
+import static Funcoes.gmail.GmailOperations.createEmailWithAttachment;
+import static Funcoes.gmail.GmailOperations.createMessageWithEmail;
 import Transicao.jPagarExtrato;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
 import com.lowagie.text.Font;
 import extrato.Extrato;
 import j4rent.Partida.Collections;
@@ -20,9 +25,13 @@ import java.awt.AWTKeyStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -867,22 +878,36 @@ public class jExtrato extends javax.swing.JInternalFrame {
                     String EmailLoca = EmailLocaDados[1][3].toLowerCase();
                     boolean emailvalido = (EmailLoca.indexOf("@") > 0) && (EmailLoca.indexOf("@")+1 < (EmailLoca.lastIndexOf(".")) && (EmailLoca.lastIndexOf(".") < EmailLoca.length()) );
                     if (emailvalido) {
-                        Outlook email = new Outlook();
+                        //Outlook email = new Outlook();
                         try {            
                             String To = EmailLoca.trim().toLowerCase();
                             String Subject = "Extrato do Mês";
                             String Body = "Documento em Anexo no formato pdf";
                             String[] Attachments = new String[] {System.getProperty("user.dir") + "/" + FileNamePdf};
-                            email.Send(To, null, Subject, Body, Attachments);
-                            if (!email.isSend()) {
-                                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
-                            } else {
+                            
+                            Gmail service = GmailAPI.getGmailService();
+                            MimeMessage Mimemessage = createEmailWithAttachment(To,"me",Subject,Body,new File(System.getProperty("user.dir") + "/" + FileNamePdf));
+                            Message message = createMessageWithEmail(Mimemessage);
+                            message = service.users().messages().send("me", message).execute();
+
+                            System.out.println("Message id: " + message.getId());
+                            System.out.println(message.toPrettyString());
+                            if (message.getId() != null) {
                                 JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
                             }
-                        } catch (Exception ex) {
+                            
+//                            email.Send(To, null, Subject, Body, Attachments);
+//                            if (!email.isSend()) {
+//                                JOptionPane.showMessageDialog(null, "Erro ao enviar!!!\n\nTente novamente...", "Atenção", JOptionPane.ERROR_MESSAGE);
+//                            } else {
+//                                JOptionPane.showMessageDialog(null, "Enviado com sucesso!!!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+//                            }
+                        } catch (HeadlessException | IOException | GeneralSecurityException | MessagingException ex) {
                             ex.printStackTrace();
-                        } finally {
-                            email = null;
+                        //} finally {
+                        //    email = null;
                         }
                     }
                 }
