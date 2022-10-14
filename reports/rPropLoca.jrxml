@@ -14,7 +14,7 @@
 	</parameter>
 	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT p.rgprp, p.nome, i.rgimv, CONCAT(i.end,',',i.num,' ',i.compl) AS endereco, i.bairro, i.cidade, i.estado, l.contrato, l.nomerazao, c.dtvencimento, c.dtinicio, c.dttermino, c.dtultrecebimento, StrVal(Mid(c.campo,6,10)) AS aluguel, p.cpfcnpj FROM proprietarios p, imoveis i, locatarios l, CARTEIRA c WHERE i.rgprp = p.rgprp and (l.rgprp = p.rgprp and l.rgimv = i.rgimv) AND (c.rgprp = p.rgprp AND c.rgimv = i.rgimv AND c.contrato = l.contrato) AND (Upper(p.nome) >= $P{propini} AND Upper(p.nome) <= $P{propfim}) AND (Mid(c.campo,1,5) = '01:1:') AND (Lower(Trim(p.status)) = $P{propstatus})  ORDER BY Upper(p.nome), Upper(l.nomerazao)]]>
+		<![CDATA[SELECT p.rgprp, p.nome, i.rgimv, CONCAT(i.end,',',i.num,' ',i.compl) AS endereco, i.bairro, i.cidade, i.estado, l.contrato, l.nomerazao, c.dtvencimento, c.dtinicio, c.dttermino, c.dtultrecebimento, StrVal(Mid(c.campo,6,10)) AS aluguel, p.cpfcnpj FROM proprietarios p, imoveis i, locatarios l, CARTEIRA c WHERE i.rgprp = p.rgprp and (l.rgprp = p.rgprp and l.rgimv = i.rgimv) AND (c.rgprp = p.rgprp AND c.rgimv = i.rgimv AND c.contrato = l.contrato) AND (Upper(p.nome) >= $P{propini} AND Upper(p.nome) <= $P{propfim}) AND (Mid(c.campo,1,5) = '01:1:' OR Mid(c.campo,1,5) = '02:1:') AND (Lower(Trim(p.status)) = $P{propstatus})  ORDER BY Upper(p.nome), Upper(l.nomerazao)]]>
 	</queryString>
 	<field name="rgprp" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -53,9 +53,7 @@
 	<field name="dtultrecebimento" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="aluguel" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="aluguel" class="java.math.BigDecimal"/>
 	<field name="cpfcnpj" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>

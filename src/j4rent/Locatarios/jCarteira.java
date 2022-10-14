@@ -384,7 +384,9 @@ public final class jCarteira extends javax.swing.JDialog {
             if (nmCampo.contains("Field")) {
                 cCampos[j] = ChangeCampos(cCampos[j],2,saida);
             } else if (nmCampo.contains("Check")) {
-                cCampos[j] = ChangeCampos(cCampos[j], -2, saida);
+                if (!cCampos[j].contains("AL")) {
+                    cCampos[j] = ChangeCampos(cCampos[j], -2, saida);
+                }
             } else if (nmCampo.contains("Ant")) {
                 cCampos[j] = ChangeCampos(cCampos[j], 4, saida);
             } else if (nmCampo.contains("Cota")) {
@@ -393,6 +395,10 @@ public final class jCarteira extends javax.swing.JDialog {
                 cCampos[j] = ChangeCampos(cCampos[j], -1, saida);
             }
 
+            if (cCampos[j].contains("RT") && cCampos[j].contains("AT")) {
+                JOptionPane.showMessageDialog(this, "Voçe não pode colocar um campo Antecipado em Retenção.");
+                return false;
+            }
             int mod = (i + 1) % 6;
             if (mod == 0) {
                 j++;

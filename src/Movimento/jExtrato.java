@@ -35,6 +35,8 @@ import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +52,8 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.swing.JRViewer;
+import org.apache.tools.ant.types.resources.selectors.Compare;
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.c;
 
 /**
  *
@@ -386,30 +390,45 @@ public class jExtrato extends javax.swing.JInternalFrame {
             //sSql = "SELECT DISTINCT e.rgprp, p.nome AS nome FROM extrato e, proprietarios p WHERE e.rgprp = p.rgprp AND TRIM(p.conta) <> '' AND tag <> 'X' ORDER BY Lower(p.nome);";
             // 09/05/2012 para mostar somente asqueles que possuem saldo
             //sSql = "SELECT DISTINCT e.rgprp, p.nome AS nome, e.tag AS tag FROM extrato e, proprietarios p WHERE (Upper(p.status) = 'ATIVO') and (p.rgprp = e.rgprp) and TRIM(p.conta) <> '' ORDER BY Lower(p.nome);";
-            sSql = "SELECT DISTINCT e.rgprp, p.nome AS nome, e.tag AS tag FROM extrato e, proprietarios p WHERE (Upper(p.status) = 'ATIVO') and (p.rgprp = e.rgprp) and TRIM(p.conta) <> '' and (e.tag <> 'X' AND e.tag <> 'B') ORDER BY Lower(p.nome);";
+            //sSql = "SELECT DISTINCT e.rgprp, p.nome AS nome, e.tag AS tag FROM extrato e, proprietarios p WHERE (Upper(p.status) = 'ATIVO') and (p.rgprp = e.rgprp) and TRIM(p.conta) <> '' and (e.tag <> 'X' AND e.tag <> 'B') ORDER BY Lower(p.nome);";
+            sSql = "SELECT DISTINCT e.rgprp, p.nome AS nome, e.tag AS tag FROM extrato e, proprietarios p WHERE (Upper(p.status) = 'ATIVO') and p.rgprp = e.rgprp AND TRIM(p.conta) <> '' AND (e.tag <> 'X' AND e.tag <> 'B') " +
+                    "UNION DISTINCT " +
+                    "SELECT DISTINCT a.registro rgprp, pr.nome AS nome, a.tag AS tag FROM avisos a, proprietarios pr WHERE (Upper(pr.status) = 'ATIVO') and pr.rgprp = a.registro AND TRIM(pr.conta) <> '' AND a.rid = 0 AND (a.tag <> 'X' AND a.tag <> 'B') ORDER BY Lower(2);";
         }
         ResultSet imResult = this.conn.AbrirTabela(sSql, ResultSet.CONCUR_READ_ONLY);
-
-        jRgprp.removeAllItems();
-        jNomeProp.removeAllItems();
+        int nRecord = DbMain.RecordCount(imResult);
+        
+        List<Object[]> props = new ArrayList<Object[]>();
         try {
             while (imResult.next()) {
                 if (!imResult.getString("tag").equalsIgnoreCase("X")) {
-                    jRgprp.addItem(String.valueOf(imResult.getInt("rgprp")));
-                    jNomeProp.addItem(imResult.getString("nome"));
+                    props.add(new Object[] {String.valueOf(imResult.getInt("rgprp")), imResult.getString("nome")});
                 } else {
                     String[][] aAvisos = null;
                     aAvisos = conn.LerCamposTabela(new String[] {"tag"}, "avisos", "rid = 0 and registro = '" + String.valueOf(imResult.getInt("rgprp")) + "' AND tag != 'X'");
                     if (aAvisos != null) {
-                        jRgprp.addItem(String.valueOf(imResult.getInt("rgprp")));
-                        jNomeProp.addItem(imResult.getString("nome"));
+                        props.add(new Object[] {String.valueOf(imResult.getInt("rgprp")), imResult.getString("nome")});
                     }
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception e) {e.printStackTrace();}
         DbMain.FecharTabela(imResult);
+        
+        // Ordena Lista
+        props.sort(new Comparator<Object[]>(){
+            @Override
+            public int compare(Object[] o1, Object[] o2)
+            {
+               return o1[1].toString().compareTo(o2[1].toString());
+            }
+        });
+        
+        jRgprp.removeAllItems();
+        jNomeProp.removeAllItems();
+        for (Object[] item : props) {
+            jRgprp.addItem(item[0].toString());
+            jNomeProp.addItem(item[1].toString());
+        }
     }
 
     private void ImprimirExtrato() {
