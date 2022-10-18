@@ -4,11 +4,21 @@
  */
 package j4rent.Locatarios;
 
-import Funcoes.DbMain;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.table.*;
+import Funcoes.CEPEndereco;
+import Funcoes.ClienteViaCepWS;
 import Funcoes.TableControl;
-import Funcoes.VariaveisGlobais;
 import Funcoes.newTable;
-import java.sql.ResultSet;
+import com.jgoodies.forms.factories.*;
+import com.jgoodies.forms.layout.*;
+import static java.lang.Thread.sleep;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
 
 /**
  *
@@ -16,7 +26,6 @@ import java.sql.ResultSet;
  */
 public class BuscaCep extends javax.swing.JDialog {
     int tam = 0, n = 0;
-    DbMain conn = VariaveisGlobais.conexao;
     public Object[] dados = null;
     
     /**
@@ -26,8 +35,26 @@ public class BuscaCep extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        String[] aheaders = {"Logradouro","Nomeslog","Endereço","Bairro","Cidade","Uf","Cep"};
-        int[] widths = {0,0,500,250,250,100,150};
+        List<String> list = new ArrayList<>();
+        list.add("AC"); list.add("AL"); list.add("AP");
+        list.add("AM"); list.add("BA"); list.add("CE");
+        list.add("DF"); list.add("ES"); list.add("GO");
+        list.add("MA"); list.add("MT"); list.add("MS");
+        list.add("MG"); list.add("PA"); list.add("PB");
+        list.add("PR"); list.add("PE"); list.add("PI");
+        list.add("RJ"); list.add("RN"); list.add("RS");
+        list.add("RO"); list.add("RR"); list.add("SC");
+        list.add("SP"); list.add("SE"); list.add("TO");
+        for (String item : list) jComboBoxUf.addItem(item);
+        jComboBoxUf.setSelectedItem("RJ");
+        
+        List<String> listaCid = new ArrayList<>();
+        listaCid.add("Niteroi"); listaCid.add("Sao Goncalo");
+        listaCid.add("Itaborai"); listaCid.add("Rio de Janeiro");
+        for (String item : listaCid) jComboBoxCidade.addItem(item);
+        
+        String[] aheaders = {"Siafi","Endereço","Complto","Bairro","Cidade","Uf","Cep"};
+        int[] widths = {0,500,300,200,200,100,150};
         String[] aligns = {"L","L","L","L","L","L","L"};
         newTable.InitTable(tblCEPS, aheaders, widths, aligns, true);
         
@@ -37,48 +64,36 @@ public class BuscaCep extends javax.swing.JDialog {
     private void SeekCep(String ctexto) {
         TableControl.Clear(tblCEPS);
         
-        String[] cbusca = ctexto.split(",");
-        String tsql = "";
-        if (cbusca.length == 1) {
-            tsql = "select e.logradouro, e.nomeslog, e.nomeclog, b.nome as bairro, c.nome as cidade, b.uf, e.cep  from cep_enderecos e, cep_bairros b, cep_cidades c where (e.bairro_id = b.id) and (e.cidade_id = c.id) and b.uf = 'RJ' and UPPER(nomeslog) like '%" + cbusca[0].toUpperCase().trim() + "%' ORDER BY Upper(c.nome), Upper(e.nomeslog);";
-        } else {
-            tsql = "select e.logradouro, e.nomeslog, e.nomeclog, b.nome as bairro, c.nome as cidade, b.uf, e.cep  from cep_enderecos e, cep_bairros b, cep_cidades c where (e.bairro_id = b.id) and (e.cidade_id = c.id) and b.uf = 'RJ' and UPPER(nomeslog) like '%" + cbusca[0].toUpperCase().trim() + "%' and Upper(c.nome) like '%" + cbusca[1].trim().toUpperCase() + "%' ORDER BY Upper(c.nome), Upper(e.nomeslog);";
-        }
-        //"select e.logradouro, e.nomeslog, e.nomeclog, b.nome as bairro, c.nome as cidade, b.uf, e.cep  from cep_enderecos e, cep_bairros b, cep_cidades c where (e.bairro_id = b.id) and (e.cidade_id = c.id) and b.uf = 'RJ' and UPPER(nomeslog) like '%" + ctexto.toUpperCase().trim() + "%' ORDER BY Upper(c.nome), Upper(e.nomeslog);";
-        ResultSet tbcep = conn.AbrirTabela(tsql, ResultSet.CONCUR_READ_ONLY);
-        try {
-            tam = conn.RecordCount(tbcep);
+        ClienteViaCepWS client = new ClienteViaCepWS();
+                
+        List<CEPEndereco> enderecos = null;
+        enderecos = client.buscaEnderecos(jComboBoxUf.getSelectedItem().toString(), jComboBoxCidade.getSelectedItem().toString(), ctexto);
+        
+        if (enderecos.size() != 0) {
+            tam = enderecos.size();
             n = 1;
             jbarra.setValue(0);
             jbarra.setVisible(true);
-            
-            while (tbcep.next()) {
-                new Thread() {
-                    public void run() {
-                        int pos = (n * 100) / tam;
-                        try {sleep(100);} catch (Exception ex) {}
-                        jbarra.setValue(pos);
-                        jbarra.repaint();
-                    }
-                }.start();                
-                                
-                String slogra = tbcep.getString("logradouro");
-                String sender = tbcep.getString("nomeslog");
-                String sendbc = tbcep.getString("nomeclog");
-                String sbairr = tbcep.getString("bairro");
-                String scidad = tbcep.getString("cidade");
-                String suf    = tbcep.getString("uf");
-                String scep   = tbcep.getString("cep");
-                
-                Object[] linha = {slogra, sender, sendbc, sbairr, scidad, suf, scep};
-                newTable.add(tblCEPS, linha);
-                
-                this.n++;
+            for (CEPEndereco item : enderecos) {
+                    new Thread() {
+                        public void run() {
+                            int pos = (n * 100) / tam;
+                            try {sleep(100);} catch (Exception ex) {}
+                            jbarra.setValue(pos);
+                            jbarra.repaint();
+                        }
+                    }.start();                
+
+                    Object[] linha = {item.getSiaf(),item.getLogradouro(),item.getComplemento(), item.getBairro(), item.getLocalidade(), item.getUf(), item.getCep()};
+                    newTable.add(tblCEPS, linha);
+
+                    n++;
             }
-        } catch (Exception err) {}
-        DbMain.FecharTabela(tbcep);
+        } else {
+            JOptionPane.showMessageDialog(this, "Endereço não encontrado!\n\nEntre com um Endereço válido.","Cep", WARNING_MESSAGE);
+        }
         
-        //jbarra.setVisible(false);
+        jbarra.setVisible(false);
     }
     
     /**
@@ -89,82 +104,110 @@ public class BuscaCep extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        jScrollPane1 = new JScrollPane();
+        tblCEPS = new JTable();
+        jbarra = new JProgressBar();
+        jLabel1 = new JLabel();
+        txtBuscar = new JTextField();
+        jbtBuscar = new JButton();
+        jLabel2 = new JLabel();
+        jComboBoxUf = new JComboBox<>();
+        jComboBoxCidade = new JComboBox<>();
+        jLabel3 = new JLabel();
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblCEPS = new javax.swing.JTable();
-        jbarra = new javax.swing.JProgressBar();
-        jLabel1 = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
-        jbtBuscar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle(".:: Busca de Cep por endereço...");
+        //======== this ========
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(".:: Busca de Cep por endere\u00e7o...");
         setAlwaysOnTop(true);
         setModal(true);
         setResizable(false);
+        Container contentPane = getContentPane();
 
-        tblCEPS.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        //======== jScrollPane1 ========
+        {
 
-            },
-            new String [] {
+            //---- tblCEPS ----
+            tblCEPS.setModel(new DefaultTableModel());
+            tblCEPS.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tblCEPS.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    tblCEPSMouseClicked(e);
+                }
+            });
+            jScrollPane1.setViewportView(tblCEPS);
+        }
 
-            }
-        ));
-        tblCEPS.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblCEPS.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCEPSMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblCEPS);
+        //---- jLabel1 ----
+        jLabel1.setText("Endere\u00e7o:");
 
-        jLabel1.setText("Texto:");
-
-        jbtBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Figuras/find.png"))); // NOI18N
+        //---- jbtBuscar ----
+        jbtBuscar.setIcon(new ImageIcon(getClass().getResource("/Figuras/find.png")));
         jbtBuscar.setMnemonic('B');
         jbtBuscar.setText("Buscar");
-        jbtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtBuscarActionPerformed(evt);
-            }
-        });
+        jbtBuscar.addActionListener(e -> jbtBuscarActionPerformed(e));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbarra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        //---- jLabel2 ----
+        jLabel2.setText("Estado:");
 
+        //---- jComboBoxUf ----
+        jComboBoxUf.setModel(new DefaultComboBoxModel<>(new String[] {
+
+        }));
+
+        //---- jComboBoxCidade ----
+        jComboBoxCidade.setModel(new DefaultComboBoxModel<>(new String[] {
+
+        }));
+
+        //---- jLabel3 ----
+        jLabel3.setText("Cidade:");
+
+        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
+        contentPane.setLayout(contentPaneLayout);
+        contentPaneLayout.setHorizontalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(5, 5, 5)
+                            .addComponent(jComboBoxUf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGap(5, 5, 5)
+                            .addComponent(jLabel3)
+                            .addGap(5, 5, 5)
+                            .addComponent(jComboBoxCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGap(5, 5, 5)
+                            .addComponent(jLabel1)
+                            .addGap(5, 5, 5)
+                            .addComponent(txtBuscar)
+                            .addGap(18, 18, 18)
+                            .addComponent(jbtBuscar))
+                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 848, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbarra, GroupLayout.PREFERRED_SIZE, 848, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(9, Short.MAX_VALUE))
+        );
+        contentPaneLayout.setVerticalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxUf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbtBuscar)
+                        .addComponent(txtBuscar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGap(5, 5, 5)
+                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+                    .addGap(5, 5, 5)
+                    .addComponent(jbarra, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(9, Short.MAX_VALUE))
+        );
         pack();
+        setLocationRelativeTo(getOwner());
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBuscarActionPerformed
@@ -232,11 +275,15 @@ public class BuscaCep extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JProgressBar jbarra;
-    private javax.swing.JButton jbtBuscar;
-    private javax.swing.JTable tblCEPS;
-    private javax.swing.JTextField txtBuscar;
+    private JScrollPane jScrollPane1;
+    private JTable tblCEPS;
+    private JProgressBar jbarra;
+    private JLabel jLabel1;
+    private JTextField txtBuscar;
+    private JButton jbtBuscar;
+    private JLabel jLabel2;
+    private JComboBox<String> jComboBoxUf;
+    private JComboBox<String> jComboBoxCidade;
+    private JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

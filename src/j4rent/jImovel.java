@@ -11,6 +11,8 @@
 
 package j4rent;
 
+import Funcoes.CEPEndereco;
+import Funcoes.ClienteViaCepWS;
 import Funcoes.Dates;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
@@ -24,6 +26,7 @@ import Protocolo.Calculos;
 import j4rent.Locatarios.BuscaCep;
 import java.awt.AWTKeyStroke;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -73,6 +76,25 @@ public class jImovel extends javax.swing.JDialog {
             //iBtExcluir.setEnabled(true);
         }
 
+        iCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (iEndereco.getText().trim().equals("") && iCep.getText().trim() != "") {
+                    CEPEndereco cepEnder = ClienteViaCepWS.buscarCep(iCep.getText());
+                    if (cepEnder != null) {
+                        iEndereco.setText(cepEnder.getLogradouro());
+                        iNumero.setText("");
+                        iCplto.setText("");
+                        iBairro.setText(cepEnder.getBairro());
+                        iCidade.setText(cepEnder.getLocalidade());
+                        iEstado.setText(cepEnder.getUf());
+                        iCodCidade.setText(cepEnder.getSiaf());
+                        
+                        iNumero.requestFocus();
+                    }
+                }            
+            }
+        });
+        
         iTipoImv.requestFocus();
     }
 
@@ -724,12 +746,14 @@ public class jImovel extends javax.swing.JDialog {
         oCep = null;
 
         if (dados != null) {
-            iEndereco.setText(dados[0].toString() + " " + dados[1].toString());
+            iEndereco.setText(dados[1].toString());
             iBairro.setText(dados[2].toString());
             iCidade.setText(dados[3].toString());
             iEstado.setText(dados[4].toString());
             iCep.setText(dados[5].toString());
 
+            iCodCidade.setText(dados[0].toString());
+            
             iNumero.requestFocus();
         }
     }//GEN-LAST:event_jbtBuscaCepActionPerformed
@@ -838,8 +862,10 @@ public class jImovel extends javax.swing.JDialog {
         for (i=0; i <= maxcpos - 1; i++) {
             if (jctCampos.getComponent(i) instanceof JButton) {
                 if (((JButton) jctCampos.getComponent(i)).isFocusable()) {
-                    new File("fotos/" + ((JButton)jctCampos.getComponent(i)).getToolTipText() + ".jpg").delete();
-                    jctCampos.remove(i);
+                    if (new File("fotos/" + ((JButton)jctCampos.getComponent(i)).getToolTipText() + ".jpg").exists()) {
+                        new File("fotos/" + ((JButton)jctCampos.getComponent(i)).getToolTipText() + ".jpg").delete();
+                        jctCampos.remove(i);
+                    }
                     break;
                 }
             }
@@ -862,15 +888,20 @@ public class jImovel extends javax.swing.JDialog {
                     String[] photos = img[0][3].split(";");
                     String nm = photos[photos.length - 1];
                     String mn = nm.substring(0, nm.indexOf("_"));
-                    int nr = Integer.valueOf(nm.substring(nm.indexOf("_") + 1)) + 1;
+                    int nr = Integer.valueOf(nm.substring(nm.indexOf("_") + 1).substring(0,2)) + 1;
                     nmImagem = mn + "_" + FuncoesGlobais.StrZero(String.valueOf(nr), 2);
                 } else {
-                    nmImagem = VariaveisGlobais.rgimv + "_01";
+                    nmImagem = VariaveisGlobais.rgimv + "_01.jpg";
                 }
+            } else {
+                nmImagem = VariaveisGlobais.rgimv + "_01.jpg";
             }
         } else {
-            nmImagem = VariaveisGlobais.rgimv + "_01";
+            nmImagem = VariaveisGlobais.rgimv + "_01.jpg";
         }
+        if(nmImagem.equals(".jpg")) nmImagem = VariaveisGlobais.rgimv + "_01.jpg";
+        if (!nmImagem.contains(".jpg")) nmImagem += ".jpg";
+        
         jInsertPhoto poto = new jInsertPhoto(null, true);
         poto.setImageName(nmImagem);
         poto.setVisible(true);
@@ -1199,6 +1230,9 @@ public class jImovel extends javax.swing.JDialog {
                     iMatriculas.addItem(mtc[0] + " - " + mtc[1]);
                 }
             }
+            //jctCampos.repaint();
+            //String nfotos = ListaFotos();
+            //try {MontaTela(nfotos);} catch (Exception e) {}            
             try {MontaTela(pResult.getString("fotos"));} catch (Exception e) {e.printStackTrace();}
         } catch (Exception e) {e.printStackTrace();}
     }
@@ -1206,7 +1240,7 @@ public class jImovel extends javax.swing.JDialog {
     public void viewFotoFrame(String foto) {
         jPhotoPreview pp = null;
         
-        try { pp = new jPhotoPreview(null, true);} catch (Exception e) {e.printStackTrace();}
+        try { pp = new jPhotoPreview(new Frame(), true);} catch (Exception e) {e.printStackTrace();}
         pp.setPhoto(foto);
         pp.setVisible(true);
         pp = null;
@@ -1241,7 +1275,7 @@ public class jImovel extends javax.swing.JDialog {
             // Monta campos
             int i = 0;
             for (i=0; i<= foto.length - 1; i++) {
-                MontaCampos(foto[i], i);
+                if (new File(System.getProperty("user.dir") + "/" + "fotos/" + foto[i] + ".jpg").exists()) MontaCampos(foto[i] , i);
             }
         }
     }

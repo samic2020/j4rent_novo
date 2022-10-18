@@ -108,6 +108,60 @@ public class jLocatarios extends javax.swing.JInternalFrame {
         conj.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
         this.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
 
+        mfCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (mfEndereco.getText().trim().equals("") && mfCep.getText().trim() != "") {
+                    CEPEndereco cepEnder = ClienteViaCepWS.buscarCep(mfCep.getText());
+                    if (cepEnder != null) {
+                        mfEndereco.setText(cepEnder.getLogradouro());
+                        mfNumero.setText("");
+                        mfCplto.setText("");
+                        mfBairro.setText(cepEnder.getBairro());
+                        mfCidade.setText(cepEnder.getLocalidade());
+                        mfEstado.setText(cepEnder.getUf());
+                        
+                        mfNumero.requestFocus();
+                    }
+                }            
+            }
+        });
+        
+        mjCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (mjEndereco.getText().trim().equals("") && mjCep.getText().trim() != "") {
+                    CEPEndereco cepEnder = ClienteViaCepWS.buscarCep(mjCep.getText());
+                    if (cepEnder != null) {
+                        mjEndereco.setText(cepEnder.getLogradouro());
+                        mjNumero.setText("");
+                        mjCplto.setText("");
+                        mjBairro.setText(cepEnder.getBairro());
+                        mjCidade.setText(cepEnder.getLocalidade());
+                        mjEstado.setText(cepEnder.getUf());
+                        
+                        mjNumero.requestFocus();
+                    }
+                }            
+            }
+        });
+        
+        mCepEnv.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (mEnderecoEnv.getText().trim().equals("") && mCepEnv.getText().trim() != "") {
+                    CEPEndereco cepEnder = ClienteViaCepWS.buscarCep(mCepEnv.getText());
+                    if (cepEnder != null) {
+                        mEnderecoEnv.setText(cepEnder.getLogradouro());
+                        mNumeroEnv.setText("");
+                        mCpltoEnv.setText("");
+                        mBairroEnv.setText(cepEnder.getBairro());
+                        mCidadeEnv.setText(cepEnder.getLocalidade());
+                        mEstadoEnv.setText(cepEnder.getUf());
+                        
+                        mNumeroEnv.requestFocus();
+                    }
+                }            
+            }
+        });
+                
         SelectAll();
     }
 
@@ -144,7 +198,9 @@ public class jLocatarios extends javax.swing.JInternalFrame {
 
     private void LerDados(boolean bFirst) throws SQLException {
         if (DbMain.RecordCount(pResult) <= 0) {return;}
-
+        
+        // Limpa tela
+        LimpaDados();
         //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         if (bFirst) pResult.first();
@@ -2680,7 +2736,7 @@ public class jLocatarios extends javax.swing.JInternalFrame {
         oCep = null;
 
         if (dados != null) {
-            mjEndereco.setText(dados[0].toString() + " " + dados[1].toString());
+            mjEndereco.setText(dados[1].toString());
             mjBairro.setText(dados[2].toString());
             mjCidade.setText(dados[3].toString());
             mjEstado.setText(dados[4].toString());

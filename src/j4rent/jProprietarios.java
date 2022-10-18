@@ -11,6 +11,8 @@
 
 package j4rent;
 
+import Funcoes.CEPEndereco;
+import Funcoes.ClienteViaCepWS;
 import Funcoes.Dates;
 import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
@@ -278,6 +280,11 @@ public class jProprietarios extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        mCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                mCepFocusLost(evt);
+            }
+        });
 
         jLabel11.setText("Profissão:");
 
@@ -1279,7 +1286,7 @@ public class jProprietarios extends javax.swing.JInternalFrame {
         oCep = null;
 
         if (dados != null) {
-            mEndereco.setText(dados[0].toString() + " " + dados[1].toString());
+            mEndereco.setText(dados[1].toString());
             mBairro.setText(dados[2].toString());
             mCidade.setText(dados[3].toString());
             mEstado.setText(dados[4].toString());
@@ -1318,6 +1325,22 @@ public class jProprietarios extends javax.swing.JInternalFrame {
             mEmail.removeItemAt(mEmail.getSelectedIndex());
         }
     }//GEN-LAST:event_btEmailMinusActionPerformed
+
+    private void mCepFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_mCepFocusLost
+        if (mEndereco.getText().trim().equals("") && mCep.getText().trim() != "") {
+            CEPEndereco cepEnder = ClienteViaCepWS.buscarCep(mCep.getText());
+            if (cepEnder != null) {
+                mEndereco.setText(cepEnder.getLogradouro());
+                mNumero.setText("");
+                mCplto.setText("");
+                mBairro.setText(cepEnder.getBairro());
+                mCidade.setText(cepEnder.getLocalidade());
+                mEstado.setText(cepEnder.getUf());
+                
+                mNumero.requestFocus();
+            }
+        }            
+    }//GEN-LAST:event_mCepFocusLost
 
     private void GravarDados() throws SQLException {
         int iNewRgPrp = 0;

@@ -137,7 +137,7 @@ public class jInsertPhoto extends javax.swing.JDialog {
     private void btGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGravarActionPerformed
         BufferedImage imagem = BlobFields.ImageIcon2BufferedImage((ImageIcon) preview.getIcon());
         try {
-            ImageIO.write(imagem, "JPG", new File("fotos/" + this.imgname + ".jpg"));
+            ImageIO.write(imagem, "JPG", new File(System.getProperty("user.dir") + "/" + "fotos/" + this.imgname + ".jpg"));
         } catch (Exception e) {e.printStackTrace();}
         this.dispose();
     }//GEN-LAST:event_btGravarActionPerformed
