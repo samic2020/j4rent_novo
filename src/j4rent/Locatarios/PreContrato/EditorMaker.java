@@ -1,5 +1,6 @@
 package j4rent.Locatarios.PreContrato;
 
+import java.awt.event.KeyEvent;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -57,6 +58,7 @@ public class EditorMaker extends javax.swing.JInternalFrame {
         formTipo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         formMask = new javax.swing.JComboBox<>();
+        btnLancar = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         btnIgual = new javax.swing.JButton();
         btnMaiorIgual = new javax.swing.JButton();
@@ -65,8 +67,10 @@ public class EditorMaker extends javax.swing.JInternalFrame {
         btnMenorIgual = new javax.swing.JButton();
         btnDiferente = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        transferir = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        copyTranf = new javax.swing.JLabel();
+        btnClearTrans = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        transferir = new javax.swing.JTextArea();
 
         setClosable(true);
         setIconifiable(true);
@@ -292,6 +296,13 @@ public class EditorMaker extends javax.swing.JInternalFrame {
 
         formMask.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "###.###.###-##", "###.###.###-##", "###.###.###-#" }));
 
+        btnLancar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/plus.png"))); // NOI18N
+        btnLancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLancarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -305,6 +316,8 @@ public class EditorMaker extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formMask, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLancar)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -312,18 +325,27 @@ public class EditorMaker extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(formMask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(formTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnLancar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(formMask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(formTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 1, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Condição"));
 
         btnIgual.setText("==");
+        btnIgual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIgualActionPerformed(evt);
+            }
+        });
 
         btnMaiorIgual.setText(">=");
         btnMaiorIgual.addActionListener(new java.awt.event.ActionListener() {
@@ -395,7 +417,25 @@ public class EditorMaker extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Copiar:");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/copy.png"))); // NOI18N
+        copyTranf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/copy.png"))); // NOI18N
+        copyTranf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                copyTranfMouseClicked(evt);
+            }
+        });
+
+        btnClearTrans.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icones/clear.png"))); // NOI18N
+        btnClearTrans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClearTransMouseClicked(evt);
+            }
+        });
+
+        transferir.setColumns(20);
+        transferir.setLineWrap(true);
+        transferir.setRows(5);
+        transferir.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(transferir);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -418,9 +458,11 @@ public class EditorMaker extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(transferir)
+                        .addComponent(jScrollPane2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(copyTranf)
+                            .addComponent(btnClearTrans, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -443,10 +485,15 @@ public class EditorMaker extends javax.swing.JInternalFrame {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(transferir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnClearTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(copyTranf))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -454,23 +501,68 @@ public class EditorMaker extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMaiorIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaiorIgualActionPerformed
-        // TODO add your handling code here:
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a condicionar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, tsel + ".se(>= <expr>; <true>; <false>)"));
+        int ipos = transferir.getText().indexOf("<expr>");
+        transferir.select(ipos, ipos + 6);
+        transferir.requestFocus();
     }//GEN-LAST:event_btnMaiorIgualActionPerformed
 
     private void btnMaiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaiorActionPerformed
-        // TODO add your handling code here:
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a condicionar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, tsel + ".se(> <expr>; <true>; <false>)"));
+        int ipos = transferir.getText().indexOf("<expr>");
+        transferir.select(ipos, ipos + 6);
+        transferir.requestFocus();
     }//GEN-LAST:event_btnMaiorActionPerformed
 
     private void btnMenorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenorActionPerformed
-        // TODO add your handling code here:
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a condicionar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, tsel + ".se(< <expr>; <true>; <false>)"));
+        int ipos = transferir.getText().indexOf("<expr>");
+        transferir.select(ipos, ipos + 6);
+        transferir.requestFocus();
     }//GEN-LAST:event_btnMenorActionPerformed
 
     private void btnMenorIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenorIgualActionPerformed
-        // TODO add your handling code here:
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a condicionar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, tsel + ".se(<= <expr>; <true>; <false>)"));
+        int ipos = transferir.getText().indexOf("<expr>");
+        transferir.select(ipos, ipos + 6);
+        transferir.requestFocus();
     }//GEN-LAST:event_btnMenorIgualActionPerformed
 
     private void btnDiferenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiferenteActionPerformed
-        // TODO add your handling code here:
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a condicionar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, tsel + ".se(!= <expr>; <true>; <false>)"));
+        int ipos = transferir.getText().indexOf("<expr>");
+        transferir.select(ipos, ipos + 6);
+        transferir.requestFocus();
     }//GEN-LAST:event_btnDiferenteActionPerformed
 
     private void tabelaVariaveisStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabelaVariaveisStateChanged
@@ -519,11 +611,16 @@ public class EditorMaker extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void variaveisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_variaveisKeyPressed
-        FieldSelected();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            FieldSelected();
+        }
     }//GEN-LAST:event_variaveisKeyPressed
 
     private void variaveisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_variaveisMouseClicked
-        FieldSelected();
+        if (evt.getClickCount() == 2 && !evt.isConsumed()) {
+            evt.consume();
+            FieldSelected();
+        }        
     }//GEN-LAST:event_variaveisMouseClicked
 
     private void btnMauiusculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMauiusculaActionPerformed
@@ -565,6 +662,42 @@ public class EditorMaker extends javax.swing.JInternalFrame {
         
         transferir.setText(transferir.getText().replace(tsel, tsel + ".extenso()"));
     }//GEN-LAST:event_btnExtensoActionPerformed
+
+    private void btnLancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLancarActionPerformed
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a formatar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, 
+                tsel + ".format(" + formTipo.getSelectedItem().toString() + "," + 
+                formMask.getSelectedItem().toString() + ")"));
+    }//GEN-LAST:event_btnLancarActionPerformed
+
+    private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
+        String tsel = transferir.getSelectedText();
+        if (tsel == null) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar a expressão a condicionar","Atenção",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        transferir.setText(transferir.getText().replace(tsel, tsel + ".se(== <expr>; <true>; <false>)"));
+        int ipos = transferir.getText().indexOf("<expr>");
+        transferir.select(ipos, ipos + 6);
+        transferir.requestFocus();
+    }//GEN-LAST:event_btnIgualActionPerformed
+
+    private void btnClearTransMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearTransMouseClicked
+        transferir.setText("");
+        transferir.requestFocus();
+    }//GEN-LAST:event_btnClearTransMouseClicked
+
+    private void copyTranfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_copyTranfMouseClicked
+        transferir.selectAll();
+        transferir.copy();
+        transferir.setText("");
+    }//GEN-LAST:event_copyTranfMouseClicked
 
     private void FieldSelected() {
         int car = transferir.getCaretPosition();
@@ -867,9 +1000,11 @@ public class EditorMaker extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapitular;
     private javax.swing.JLabel btnClear;
+    private javax.swing.JLabel btnClearTrans;
     private javax.swing.JButton btnDiferente;
     private javax.swing.JButton btnExtenso;
     private javax.swing.JButton btnIgual;
+    private javax.swing.JButton btnLancar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnMaior;
     private javax.swing.JButton btnMaiorIgual;
@@ -877,6 +1012,7 @@ public class EditorMaker extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnMenor;
     private javax.swing.JButton btnMenorIgual;
     private javax.swing.JButton btnMinuscula;
+    private javax.swing.JLabel copyTranf;
     private javax.swing.JComboBox<String> formMask;
     private javax.swing.JComboBox<String> formTipo;
     private javax.swing.JTextField jBusca;
@@ -884,7 +1020,6 @@ public class EditorMaker extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -895,8 +1030,9 @@ public class EditorMaker extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane tabelaVariaveis;
-    private javax.swing.JTextField transferir;
+    private javax.swing.JTextArea transferir;
     private javax.swing.JTable variaveis;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,9 @@
 package j4rent.Locatarios.PreContrato;
 
 import Funcoes.Dates;
+import Funcoes.FuncoesGlobais;
 import Funcoes.jDirectory;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,18 +26,24 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 public class jGerCtro extends javax.swing.JDialog {
     private String _contrato;
     private String _nome;
+    private String _rgprp;
+    private String _rgimv;
 
-    public String getContrato() { return _contrato; }
+    public void setRgprp(String _rgprp) { this._rgprp = _rgprp; }
+
+    public void setRgimv(String _rgimv) { this._rgimv = _rgimv; }
+        
     public void setContrato(String _contrato) { this._contrato = _contrato; }
 
-    public String getNome() { return _nome; }
     public void setNome(String _nome) { this._nome = _nome; }
 
-    public void setDados(String contrato, String nome) {        
+    public void setDados(String rgprp, String rgimv, String contrato, String nome) {        
+        this._rgprp = rgprp;
+        this._rgimv = rgimv;
         jContrato.setText(contrato);
-        _contrato = contrato;
+        this._contrato = contrato;
         jNome.setText(nome);
-        _nome = nome;
+        this._nome = nome;
     }
 
     /**
@@ -201,18 +209,6 @@ public class jGerCtro extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnSairActionPerformed
 
     private void jBtnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarActionPerformed
-//        try {
-//            String content = FileUtils.readFileToString(new File(jModelo.getText().trim()), "UTF-8");
-//            content = content.replaceAll("toReplace", "replacementString");
-//            File tempFile = new File(jSaida.getText().trim());
-//            FileUtils.writeStringToFile(tempFile, content, "UTF-8");
-//        } catch (IOException e) {
-//            JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de saida.");
-//            return;
-//        }
-//        JOptionPane.showMessageDialog(this, "Arquivo " + jSaida.getText() + " gerado com sucesso.");
-//        dispose();
-
         List<String> vars = new ArrayList<>();
         try {
             vars = PegarVariaveisTexto(new File(jModelo.getText().trim()));
@@ -224,16 +220,110 @@ public class jGerCtro extends javax.swing.JDialog {
             itens = RetiraBlanks(itens, false);
             
             for (String sitem : itens) {
-                System.out.println("var -> " + sitem);
+                if (sitem.contains(".")) {
+                    String[] scom = Reverse(sitem.toString().split("\\."));
+                    String outvar = "";
+                    int fechaParenteses = 0; boolean seFormat = false;
+                    for (String var : scom) {
+                        switch (var.toString().toLowerCase()) {
+                            case "capitule()":
+                                outvar += "Capitule(";
+                                fechaParenteses++;
+                                seFormat = false;
+                                break;
+                            case "extenso()":
+                                outvar += "Extenco(";
+                                fechaParenteses++;
+                                seFormat = false;
+                                break;                            
+                            case "trim()":
+                                outvar += "Trim(";
+                                fechaParenteses++;
+                                seFormat = false;
+                                break;
+                            case "toupper()":
+                                outvar += "toUpperCase(";
+                                fechaParenteses++;
+                                seFormat = false;
+                                break;
+                            case "tolower()":
+                                outvar += "toLowerCase{";
+                                fechaParenteses++;
+                                seFormat = false;
+                                break;
+                            default:
+                                if (var.toLowerCase().contains("se(")) {
+                                    outvar += "Condicao(<<exp>> ";
+                                    int sepos = var.indexOf("se(");
+                                    String formula = var.substring(sepos + 3);
+                                    int sefimpos = formula.indexOf(";");
+                                    outvar += formula.substring(0, sefimpos) + ", ";
+                                    formula = formula.substring(sefimpos + 1).trim();
+                                    sefimpos = formula.indexOf(";");
+                                    String _teste = formula.substring(0, sefimpos).trim();
+                                    if (!_teste.startsWith("'")) {
+                                        String _field = formula.substring(0, sefimpos);
+                                        outvar += FieldDbReturn(_field,true) + ", ";
+                                    } else {
+                                        outvar += formula.substring(0, sefimpos) + ",";
+                                    }
+                                    _teste = formula.substring(sefimpos + 1).trim();
+                                    if (!_teste.startsWith("'")) {
+                                        String _field = formula.substring(sefimpos + 1).trim();
+                                        _field = _field.substring(0, _field.length() - 1);
+                                        outvar += FieldDbReturn(_field,true) + ")";
+                                    } else {
+                                        outvar += formula.substring(sefimpos + 1);
+                                    }
+                                    
+                                    seFormat = true;
+                                } else if (var.toLowerCase().contains("format(")) {
+                                    outvar += "Format(<<exp>>";
+                                    int sepos = var.indexOf("format(");
+                                    String formula = var.substring(sepos + 7);
+                                    int sefimpos = formula.indexOf(",");
+                                    if (formula.substring(0, sefimpos).toLowerCase().equals("caracteres")) {
+                                        outvar += ", 0, " + formula.substring(sefimpos + 1);
+                                    } else if (formula.substring(0, sefimpos).toLowerCase().equals("data")) {
+                                        outvar += ", 1, " + formula.substring(sefimpos + 1);
+                                    } else if (formula.substring(0, sefimpos).toLowerCase().equals("valor")) {
+                                        outvar += ", 2, " + formula.substring(sefimpos + 1);
+                                    }
+                                    
+                                    seFormat = true;
+                                } else {
+                                    if (seFormat) {
+                                        outvar =  outvar.replace("<<exp>>", FieldDbReturn(var,true));
+                                    } else {
+                                        outvar += FieldDbReturn(var,true) + FuncoesGlobais.Repete(")", fechaParenteses);
+                                    }
+                                }
+                        }
+                    }
+                    System.out.println(outvar);
+                } else {
+                    System.out.println(FieldDbReturn(sitem,false));
+                }                    
             }
-            System.out.println("-x-x-x-x-x-x-x-x-x-x-x-x-");
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed
 
+    private String FieldDbReturn(String value, boolean aspas) {
+        
+        return aspas ? "'" + value + "'" : value;
+    }
+    
     private String[] RetiraBlanks(String[] value, boolean breverse) {
         List<String> _value = new ArrayList<>();
         for (String item : value) if (!item.trim().equalsIgnoreCase("")) _value.add(item);
         if (breverse) Collections.reverse(_value);
+        return _value.toArray(new String[0]);
+    }
+    
+    private String[] Reverse(String[] value) {
+        List<String> _value = new ArrayList<>();
+        for (String item : value) _value.add(item);
+        Collections.reverse(_value);
         return _value.toArray(new String[0]);
     }
     
