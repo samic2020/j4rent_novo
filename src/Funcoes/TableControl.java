@@ -16,7 +16,7 @@ import javax.swing.table.TableColumn;
 /**
  *
  * @author supervisor
- */
+ */ 
 public class TableControl {
 
     public TableControl() {}

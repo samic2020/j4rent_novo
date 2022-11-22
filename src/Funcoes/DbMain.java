@@ -1950,6 +1950,22 @@ public class DbMain {
         try { ExecutarComando(createSQL); } catch (Exception e) {}
         return;
     }
+
+    public static Timestamp getDateTimeServer() {
+        Timestamp datahora = null;
+        String sql = "select current_timestamp datahora;";
+        ResultSet rs = null;
+        try {
+            rs = VariaveisGlobais.conexao.AbrirTabela(sql, ResultSet.CONCUR_READ_ONLY);
+        } catch (Exception e) {}
+        try {
+            while (rs.next()) {
+                datahora = rs.getTimestamp("datahora");
+            }
+        } catch (SQLException e) {datahora = new Timestamp(System.currentTimeMillis());}
+        DbMain.FecharTabela(rs);
+        return datahora;
+    }
 }
 
 //CREATE TABLE `auxiliarbkp` (
