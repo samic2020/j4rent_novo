@@ -1,14 +1,18 @@
 package j4rent.Locatarios.PreContrato;
 
 import Funcoes.Dates;
+import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
+import Funcoes.VariaveisGlobais;
 import Funcoes.jDirectory;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import j4rent.Locatarios.PreContrato.evalute.DataBaseFields;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -28,7 +32,8 @@ public class jGerCtro extends javax.swing.JDialog {
     private String _nome;
     private String _rgprp;
     private String _rgimv;
-
+    private DbMain conn = VariaveisGlobais.conexao;
+    
     public void setRgprp(String _rgprp) { this._rgprp = _rgprp; }
 
     public void setRgimv(String _rgimv) { this._rgimv = _rgimv; }
@@ -219,95 +224,217 @@ public class jGerCtro extends javax.swing.JDialog {
             String[] itens = item.split("@",0);
             itens = RetiraBlanks(itens, false);
             
+            String[] formula = {};
             for (String sitem : itens) {
                 if (sitem.contains(".")) {
-                    String[] scom = Reverse(sitem.toString().split("\\."));
-                    String outvar = "";
-                    int fechaParenteses = 0; boolean seFormat = false;
-                    for (String var : scom) {
-                        switch (var.toString().toLowerCase()) {
-                            case "capitule()":
-                                outvar += "Capitule(";
-                                fechaParenteses++;
-                                seFormat = false;
-                                break;
-                            case "extenso()":
-                                outvar += "Extenco(";
-                                fechaParenteses++;
-                                seFormat = false;
-                                break;                            
-                            case "trim()":
-                                outvar += "Trim(";
-                                fechaParenteses++;
-                                seFormat = false;
-                                break;
-                            case "toupper()":
-                                outvar += "toUpperCase(";
-                                fechaParenteses++;
-                                seFormat = false;
-                                break;
-                            case "tolower()":
-                                outvar += "toLowerCase{";
-                                fechaParenteses++;
-                                seFormat = false;
-                                break;
-                            default:
-                                if (var.toLowerCase().contains("se(")) {
-                                    outvar += "Condicao(<<exp>> ";
-                                    int sepos = var.indexOf("se(");
-                                    String formula = var.substring(sepos + 3);
-                                    int sefimpos = formula.indexOf(";");
-                                    outvar += formula.substring(0, sefimpos) + ", ";
-                                    formula = formula.substring(sefimpos + 1).trim();
-                                    sefimpos = formula.indexOf(";");
-                                    String _teste = formula.substring(0, sefimpos).trim();
-                                    if (!_teste.startsWith("'")) {
-                                        String _field = formula.substring(0, sefimpos);
-                                        outvar += FieldDbReturn(_field,true) + ", ";
-                                    } else {
-                                        outvar += formula.substring(0, sefimpos) + ",";
-                                    }
-                                    _teste = formula.substring(sefimpos + 1).trim();
-                                    if (!_teste.startsWith("'")) {
-                                        String _field = formula.substring(sefimpos + 1).trim();
-                                        _field = _field.substring(0, _field.length() - 1);
-                                        outvar += FieldDbReturn(_field,true) + ")";
-                                    } else {
-                                        outvar += formula.substring(sefimpos + 1);
-                                    }
-                                    
-                                    seFormat = true;
-                                } else if (var.toLowerCase().contains("format(")) {
-                                    outvar += "Format(<<exp>>";
-                                    int sepos = var.indexOf("format(");
-                                    String formula = var.substring(sepos + 7);
-                                    int sefimpos = formula.indexOf(",");
-                                    if (formula.substring(0, sefimpos).toLowerCase().equals("caracteres")) {
-                                        outvar += ", 0, " + formula.substring(sefimpos + 1);
-                                    } else if (formula.substring(0, sefimpos).toLowerCase().equals("data")) {
-                                        outvar += ", 1, " + formula.substring(sefimpos + 1);
-                                    } else if (formula.substring(0, sefimpos).toLowerCase().equals("valor")) {
-                                        outvar += ", 2, " + formula.substring(sefimpos + 1);
-                                    }
-                                    
-                                    seFormat = true;
-                                } else {
-                                    if (seFormat) {
-                                        outvar =  outvar.replace("<<exp>>", FieldDbReturn(var,true));
-                                    } else {
-                                        outvar += FieldDbReturn(var,true) + FuncoesGlobais.Repete(")", fechaParenteses);
-                                    }
-                                }
-                        }
-                    }
-                    System.out.println(outvar);
+                    String[] scom = Reverse(sitem.toString().split("\\."));                    
+                    formula = FuncoesGlobais.ArrayAdd(formula, Prepara(scom));
                 } else {
-                    System.out.println(FieldDbReturn(sitem,false));
+                    formula = FuncoesGlobais.ArrayAdd(formula, FieldDbReturn(sitem,false));
                 }                    
+            }
+            if (formula.length > 0) {
+                for (int pos = 0; pos <= formula.length - 1; pos++) formula[pos] = MontagemFinal(formula[pos]);
+                // Parei aqui na fase 6
+                for (String na : formula) System.out.println(na);
             }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed
 
+    private String MontagemFinal(String formula) {
+        String campos = formula;
+        if (formula.indexOf("'") > 0) {
+            int posicao = 0;
+            while (formula.indexOf("'", posicao) > 0) {
+                int ipos = formula.indexOf("'", posicao);
+                int fpos = formula.indexOf("'", ipos + 1);
+                String expr = formula.substring(ipos + 1, fpos);
+                String result = "";
+                if (expr.contains("=")) {
+                    String[] _proc = expr.split("=");
+                    result = ProcessaCampos(_proc[0], _proc[1]);
+                } else {
+                    result = expr;
+                }
+                formula = formula.substring(0, ipos + 1) + result + formula.substring(fpos);
+                //formula = formula.substring(fpos + 1);
+                posicao = (formula.substring(0, ipos + 1) + result).length() + 1;
+            }
+            campos = formula;
+        } else {
+            String result = null;
+            if (formula.contains("=")) {
+                String[] _proc = formula.split("=");
+                result = ProcessaCampos(_proc[0], _proc[1]);
+            } else {
+                result = formula;
+            }
+            campos = result;
+        }        
+        return campos;
+    }
+    
+    private String FindInFields(Object[][] tabela, String campo) {
+        int pos = FuncoesGlobais.FindinObjects(tabela, 1, campo);
+        return tabela[pos][0].toString();
+    }
+    
+    private String ProcessaCampos(String tabela, String campo) {
+        String retorno = null;
+        String selectSQL = "";
+        String databaseField = null;
+        boolean isCart = false;
+        
+        switch (tabela.trim().toLowerCase()) {
+            case "prop":
+                databaseField = FindInFields(new DataBaseFields().DatabaseVariables(0), campo);
+                selectSQL = "SELECT `" + databaseField + "` FROM `proprietarios` WHERE rgprp = '" + this._rgprp + "' LIMIT 1";
+                break;
+            case "imov":
+                databaseField = FindInFields(new DataBaseFields().DatabaseVariables(1), campo);
+                selectSQL = "SELECT `" + databaseField + "` FROM `imoveis` WHERE `rgprp` = '" + this._rgprp + 
+                            "' AND `rgimv` = '" + this._rgimv + "' LIMIT 1";
+                break;
+            case "loca":
+                databaseField = FindInFields(new DataBaseFields().DatabaseVariables(2), campo);
+                selectSQL = "SELECT `" + databaseField + "` FROM `prelocatarios` WHERE `rgprp` = '" + this._rgprp + 
+                            "' AND `rgimv` = '" + this._rgimv + "' AND `contrato` = '" + this._contrato + "' LIMIT 1";
+                break;
+            case "soci":
+                databaseField = FindInFields(new DataBaseFields().DatabaseVariables(3), campo);
+                selectSQL = "SELECT `" + databaseField + "` FROM `prelocatarios` WHERE `rgprp` = '" + this._rgprp + 
+                            "' AND `rgimv` = '" + this._rgimv + "' AND `contrato` = '" + this._contrato + "' LIMIT 1";
+                break;
+            case "fiad":
+                databaseField = FindInFields(new DataBaseFields().DatabaseVariables(4), campo);
+                selectSQL = "SELECT `" + databaseField + "` FROM `prefiadores` WHERE `rgprp` = '" + this._rgprp + 
+                            "' AND `rgimv` = '" + this._rgimv + "' AND `contrato` = '" + this._contrato + "' LIMIT 1";
+                break;
+            case "cart":
+                databaseField = FindInFields(new DataBaseFields().DatabaseVariables(5), campo);
+                if (LerValor.LerValor.isNumeric(databaseField)) {
+                    selectSQL = "SELECT `campo` AS `" + databaseField + "` FROM `precarteira` WHERE `rgprp` = '" + this._rgprp + 
+                                "' AND `rgimv` = '" + this._rgimv + "' AND `contrato` = '" + this._contrato + "' LIMIT 1";
+                    isCart = true;
+                } else {
+                    selectSQL = "SELECT `" + databaseField + "` FROM `precarteira` WHERE `rgprp` = '" + this._rgprp + 
+                                "' AND `rgimv` = '" + this._rgimv + "' AND `contrato` = '" + this._contrato + "' LIMIT 1";
+                }
+                break;
+        }
+         ResultSet pResult = conn.AbrirTabela(selectSQL, ResultSet.CONCUR_READ_ONLY);
+         try {
+             while (pResult.next()) {
+                retorno = pResult.getString(databaseField);
+                if (isCart) {
+                    ResultSet rs = conn.AbrirTabela("SELECT RetAvValorRid2(" + retorno + ") AS `" + databaseField + "`", ResultSet.CONCUR_READ_ONLY);
+                    try {
+                        while (rs.next()) {
+                            retorno = rs.getString(databaseField);
+                        }
+                    } catch (SQLException exSQL) { retorno = null; } finally { DbMain.FecharTabela(rs); }
+                }
+             }
+         } catch (SQLException sqlEx) { sqlEx.printStackTrace(); retorno = null; } finally {
+             DbMain.FecharTabela(pResult);
+         }
+         return retorno;
+    }
+    
+    private String Prepara(String[] scom) {
+        String outvar = "";
+        int fechaParenteses = 0; boolean seFormat = false;
+        int tcampos = scom.length; int contacampos = 0;
+        for (String var : scom) {
+            contacampos++;
+            switch (var.toString().toLowerCase()) {
+                case "capitule()":
+                    outvar += "Capitule(";
+                    fechaParenteses++;
+                    seFormat = false;
+                    break;
+                case "extenso()":
+                    outvar += "Extenco(";
+                    fechaParenteses++;
+                    seFormat = false;
+                    break;                            
+                case "trim()":
+                    outvar += "Trim(";
+                    fechaParenteses++;
+                    seFormat = false;
+                    break;
+                case "toupper()":
+                    outvar += "toUpperCase(";
+                    fechaParenteses++;
+                    seFormat = false;
+                    break;
+                case "tolower()":
+                    outvar += "toLowerCase{";
+                    fechaParenteses++;
+                    seFormat = false;
+                    break;
+                default:
+                    if (var.toLowerCase().contains("se(")) {
+                        outvar += "Condicao(<<exp>> ";
+                        int sepos = var.indexOf("se(");
+                        String formula = var.substring(sepos + 3);
+                        int sefimpos = formula.indexOf(";");
+                        outvar += formula.substring(0, sefimpos) + ", ";
+                        formula = formula.substring(sefimpos + 1).trim();
+                        sefimpos = formula.indexOf(";");
+                        String _teste = formula.substring(0, sefimpos).trim();
+                        if (!_teste.startsWith("'")) {
+                            String _field = formula.substring(0, sefimpos);
+                            outvar += FieldDbReturn(_field,true) + ", ";
+                        } else {
+                            outvar += formula.substring(0, sefimpos) + ",";
+                        }
+                        _teste = formula.substring(sefimpos + 1).trim();
+                        if (!_teste.startsWith("'")) {
+                            String _field = formula.substring(sefimpos + 1).trim();
+                            _field = _field.substring(0, _field.length() - 1);
+                            outvar += FieldDbReturn(_field,true) + ")";
+                            
+                            if (contacampos < tcampos) {
+                                String[] temp = new String[tcampos - contacampos];
+                                System.arraycopy(scom,contacampos,temp,0,scom.length - contacampos);
+                                
+                                outvar = outvar.replace("<<exp>>", Prepara(temp)); 
+                                return outvar + FuncoesGlobais.Repete(")", fechaParenteses);
+                            }
+                            
+                        } else {
+                            outvar += formula.substring(sefimpos + 1);
+                        }
+
+                        seFormat = true;
+                    } else if (var.toLowerCase().contains("format(")) {
+                        outvar += "Format(<<exp>>";
+                        int sepos = var.indexOf("format(");
+                        String formula = var.substring(sepos + 7);
+                        int sefimpos = formula.indexOf(",");
+                        if (formula.substring(0, sefimpos).toLowerCase().equals("caracteres")) {
+                            outvar += ", 0, " + formula.substring(sefimpos + 1);
+                        } else if (formula.substring(0, sefimpos).toLowerCase().equals("data")) {
+                            outvar += ", 1, " + formula.substring(sefimpos + 1);
+                        } else if (formula.substring(0, sefimpos).toLowerCase().equals("valor")) {
+                            outvar += ", 2, " + formula.substring(sefimpos + 1);
+                        }
+
+                        seFormat = true;
+                    } else {
+                        if (seFormat) {
+                            outvar =  outvar.replace("<<exp>>", FieldDbReturn(var,true)) + FuncoesGlobais.Repete(")", fechaParenteses);
+                        } else {
+                            outvar += FieldDbReturn(var,true) + FuncoesGlobais.Repete(")", fechaParenteses);
+                        }
+                    }
+            }
+        }
+            
+        return outvar;
+    }
+    
     private String FieldDbReturn(String value, boolean aspas) {
         
         return aspas ? "'" + value + "'" : value;
