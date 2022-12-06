@@ -13,6 +13,7 @@ import net.sourceforge.jeval.function.FunctionResult;
  * @author Samic
  */
 public class Capitule implements Function {
+    @Override
     public String getName() { return "Capitule"; }
 
     /**
@@ -37,6 +38,7 @@ public class Capitule implements Function {
      * @exception FunctionException
      *                Thrown if the argument(s) are not valid for this function.
      */    
+    @Override
     public FunctionResult execute(Evaluator evaluator, String arguments) throws FunctionException {
         String result = "";
         try {

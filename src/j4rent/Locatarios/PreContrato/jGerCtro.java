@@ -5,7 +5,11 @@ import Funcoes.DbMain;
 import Funcoes.FuncoesGlobais;
 import Funcoes.VariaveisGlobais;
 import Funcoes.jDirectory;
+import j4rent.Locatarios.PreContrato.evalute.Capitule;
+import j4rent.Locatarios.PreContrato.evalute.Condicao;
 import j4rent.Locatarios.PreContrato.evalute.DataBaseFields;
+import j4rent.Locatarios.PreContrato.evalute.Extenso;
+import j4rent.Locatarios.PreContrato.evalute.Format;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +22,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sourceforge.jeval.EvaluationException;
+import net.sourceforge.jeval.Evaluator;
+import net.sourceforge.jeval.function.FunctionException;
+import net.sourceforge.jeval.function.FunctionHelper;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -218,13 +227,14 @@ public class jGerCtro extends javax.swing.JDialog {
         try {
             vars = PegarVariaveisTexto(new File(jModelo.getText().trim()));
         } catch (IOException ioEx) { ioEx.printStackTrace(); }
+
+        String[] formula = {};
         for (String item : vars) {
             item = RetiraBracets(item);
             
             String[] itens = item.split("@",0);
             itens = RetiraBlanks(itens, false);
             
-            String[] formula = {};
             for (String sitem : itens) {
                 if (sitem.contains(".")) {
                     String[] scom = Reverse(sitem.toString().split("\\."));                    
@@ -233,12 +243,50 @@ public class jGerCtro extends javax.swing.JDialog {
                     formula = FuncoesGlobais.ArrayAdd(formula, FieldDbReturn(sitem,false));
                 }                    
             }
-            if (formula.length > 0) {
-                for (int pos = 0; pos <= formula.length - 1; pos++) formula[pos] = MontagemFinal(formula[pos]);
-                // Parei aqui na fase 6
-                for (String na : formula) System.out.println(na);
+        }
+        
+        if (formula.length > 0) {
+            for (int pos = 0; pos <= formula.length - 1; pos++) formula[pos] = MontagemFinal(formula[pos]);
+
+            Evaluator evaluator = new Evaluator();
+            evaluator.putFunction(new Capitule());
+            evaluator.putFunction(new Extenso());
+            evaluator.putFunction(new Format());
+            evaluator.putFunction(new Condicao()); 
+
+            String[] Erros = {};
+            List<String> expand = new ArrayList<>();
+            for (String macro : formula) {
+                String newField = null;
+                if (macro.contains("Capitule") || macro.contains("Extenso") || macro.contains("Format") || macro.contains("Condicao")) {
+                    try {
+                        newField = evaluator.evaluate(macro.toString());
+                        newField = FunctionHelper.trimAndRemoveQuoteChars(newField, evaluator.getQuoteCharacter());
+                    } catch (EvaluationException e) {
+                        Erros = FuncoesGlobais.ArrayAdd(Erros, "Erro na expressão " + macro.toString() + "\n");
+                        e.printStackTrace();
+                    } catch (FunctionException e) {
+                        e.printStackTrace();
+                    }       
+                }
+                if (newField == null) newField = macro;
+                System.out.println("macro:" + macro + " <-> " + newField);                
+                expand.add(newField);
+            }
+
+            if (Erros.length > 0) {
+                String msage = "";
+                for (String s : Erros) {
+                    msage += s;
+                }
+                JOptionPane.showMessageDialog(null, msage, "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                for (int i = 0; i <= vars.size() - 1; i++) {
+                    
+                }
             }
         }
+        
     }//GEN-LAST:event_jBtnGerarActionPerformed
 
     private String MontagemFinal(String formula) {
@@ -257,7 +305,6 @@ public class jGerCtro extends javax.swing.JDialog {
                     result = expr;
                 }
                 formula = formula.substring(0, ipos + 1) + result + formula.substring(fpos);
-                //formula = formula.substring(fpos + 1);
                 posicao = (formula.substring(0, ipos + 1) + result).length() + 1;
             }
             campos = formula;
@@ -327,7 +374,7 @@ public class jGerCtro extends javax.swing.JDialog {
              while (pResult.next()) {
                 retorno = pResult.getString(databaseField);
                 if (isCart) {
-                    ResultSet rs = conn.AbrirTabela("SELECT RetAvValorRid2(" + retorno + ") AS `" + databaseField + "`", ResultSet.CONCUR_READ_ONLY);
+                    ResultSet rs = conn.AbrirTabela("SELECT RetAvValorRid2('" + retorno + "') AS `" + databaseField + "`", ResultSet.CONCUR_READ_ONLY);
                     try {
                         while (rs.next()) {
                             retorno = rs.getString(databaseField);
@@ -354,12 +401,12 @@ public class jGerCtro extends javax.swing.JDialog {
                     seFormat = false;
                     break;
                 case "extenso()":
-                    outvar += "Extenco(";
+                    outvar += "Extenso(";
                     fechaParenteses++;
                     seFormat = false;
                     break;                            
                 case "trim()":
-                    outvar += "Trim(";
+                    outvar += "trim(";
                     fechaParenteses++;
                     seFormat = false;
                     break;
@@ -414,11 +461,11 @@ public class jGerCtro extends javax.swing.JDialog {
                         String formula = var.substring(sepos + 7);
                         int sefimpos = formula.indexOf(",");
                         if (formula.substring(0, sefimpos).toLowerCase().equals("caracteres")) {
-                            outvar += ", 0, " + formula.substring(sefimpos + 1);
+                            outvar += ", '" + formula.substring(sefimpos + 1, formula.length() - 1) + "', 0)";
                         } else if (formula.substring(0, sefimpos).toLowerCase().equals("data")) {
-                            outvar += ", 1, " + formula.substring(sefimpos + 1);
+                            outvar += ", '" + formula.substring(sefimpos + 1, formula.length() - 1) + "', 1)";
                         } else if (formula.substring(0, sefimpos).toLowerCase().equals("valor")) {
-                            outvar += ", 2, " + formula.substring(sefimpos + 1);
+                            outvar += ", '" + formula.substring(sefimpos + 1, formula.length() - 1) + "', 2)";
                         }
 
                         seFormat = true;
@@ -506,6 +553,7 @@ public class jGerCtro extends javax.swing.JDialog {
                 };
             }            
         } catch (Exception e) { e. printStackTrace(); }
+        fileName.close();
         return retorno;
     }
     
