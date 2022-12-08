@@ -220,7 +220,7 @@ public class VariaveisGlobais {
     
     // Marca
     public static String Marca;
-        
+    
     public static void LerConf() {
         VariaveisGlobais.myLogo = System.getProperty("myLogo", "resources/login.jpg");
         

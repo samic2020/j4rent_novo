@@ -11,6 +11,7 @@ import j4rent.Locatarios.PreContrato.evalute.DataBaseFields;
 import j4rent.Locatarios.PreContrato.evalute.Extenso;
 import j4rent.Locatarios.PreContrato.evalute.Format;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -29,8 +30,11 @@ import net.sourceforge.jeval.Evaluator;
 import net.sourceforge.jeval.function.FunctionException;
 import net.sourceforge.jeval.function.FunctionHelper;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.xwpf.usermodel.PositionInParagraph;
+import org.apache.poi.xwpf.usermodel.TextSegement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 /**
  *
@@ -223,6 +227,11 @@ public class jGerCtro extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnSairActionPerformed
 
     private void jBtnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarActionPerformed
+        if (jModelo.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar o texto modelo para processar.", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         List<String> vars = new ArrayList<>();
         try {
             vars = PegarVariaveisTexto(new File(jModelo.getText().trim()));
@@ -270,7 +279,7 @@ public class jGerCtro extends javax.swing.JDialog {
                     }       
                 }
                 if (newField == null) newField = macro;
-                System.out.println("macro:" + macro + " <-> " + newField);                
+                //System.out.println("macro:" + macro + " <-> " + newField);                
                 expand.add(newField);
             }
 
@@ -281,12 +290,9 @@ public class jGerCtro extends javax.swing.JDialog {
                 }
                 JOptionPane.showMessageDialog(null, msage, "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                for (int i = 0; i <= vars.size() - 1; i++) {
-                    
-                }
+                updateDocument(jModelo.getText().trim(), jSaida.getText().trim(), vars, expand);
             }
-        }
-        
+        }        
     }//GEN-LAST:event_jBtnGerarActionPerformed
 
     private String MontagemFinal(String formula) {
@@ -557,6 +563,102 @@ public class jGerCtro extends javax.swing.JDialog {
         return retorno;
     }
     
+    private void updateDocument(String input, String output, List<String> invars, List<String> outvars) {
+        String line = "";
+        try {
+            XWPFDocument doc = new XWPFDocument( Files.newInputStream(Paths.get(input)));
+            List<XWPFParagraph> xwpfParagraphList = doc.getParagraphs();
+            for (XWPFParagraph xwpfParagraph : xwpfParagraphList) {
+                for (int i = 0; i <= invars.size() - 1; i++) {
+                    if (replaceInParagraph(xwpfParagraph,invars.get(i), outvars.get(i))) {
+                        //System.out.println(invars.get(i) + " <-> " + outvars.get(i));
+                    }
+                }
+            }
+
+            try (FileOutputStream out = new FileOutputStream(output)) {
+                doc.write(out);
+            }
+        } catch (IOException ioEx) {}         
+    }
+
+        public boolean replaceInParagraph(XWPFParagraph para, String toReplace, String replaceWith) {
+        boolean didReplace = false;
+
+        if (para != null && toReplace != null && replaceWith != null) {
+            List<XWPFRun> runs = para.getRuns();
+            TextSegement found = para.searchText(toReplace, new PositionInParagraph());
+            if (found != null) {
+                if (found.getBeginRun() == found.getEndRun()) {
+                    // whole search string is in one Run
+                    XWPFRun run = runs.get(found.getBeginRun());
+                    String runText = run.getText(run.getTextPosition());
+
+                    //Support of Enter to transform it to a line break
+                    //------------------------------------------------
+                    String replaced = runText.replace(toReplace, replaceWith);
+                    replaceInRun(run, replaced);
+                    //------------------------------------------------
+                    //            run.setText(replaced, 0);
+                    //------------------------------------------------
+
+                    didReplace = true;
+                } else {
+                    // The search string spans over more than one Run
+                    // Put the Strings together
+                    StringBuilder b = new StringBuilder();
+                    for (int runPos = found.getBeginRun(); runPos <= found.getEndRun(); runPos++) {
+                        XWPFRun run = runs.get(runPos);
+                        b.append(run.getText(run.getTextPosition()));
+                    }
+                    String connectedRuns = b.toString();
+                    String replaced = connectedRuns.replace(toReplace, replaceWith);
+
+                    // The first Run receives the replaced String of all connected Runs
+                    XWPFRun partOne = runs.get(found.getBeginRun());
+                    //Support of Enter to transform it to a line break
+                    //------------------------------------------------
+                    replaceInRun(partOne, replaced);//replaceWith
+                    //partOne.setText(replaced, 0);
+                    //------------------------------------------------
+
+                    // Removing the text in the other Runs.
+                    for (int runPos = found.getBeginRun() + 1; runPos <= found.getEndRun(); runPos++) {
+                        XWPFRun partNext = runs.get(runPos);
+                        partNext.setText("", 0);
+                    }
+                    didReplace = true;
+                }
+            }
+        }
+        return didReplace;
+    }    
+    
+    private void replaceInRun(XWPFRun run, String replaceWith) {
+        boolean firstSet = true;
+
+        String remainingFragment = replaceWith;
+        while (remainingFragment.contains("\n")) {
+            int indexOfEnter = remainingFragment.indexOf("\n");
+            String firstPart = remainingFragment.substring(0, indexOfEnter);
+            remainingFragment = remainingFragment.substring(indexOfEnter + 1, remainingFragment.length());
+            if (firstSet) {
+                run.setText(firstPart, 0);
+                firstSet = false;
+            } else {
+                run.setText(firstPart);//,0
+            }
+            run.addBreak();
+        }
+        //if (!Utils.isStringEmpty(remainingFragment) || firstSet) {
+            if (firstSet) {
+                run.setText(remainingFragment, 0);
+            } else {
+                run.setText(remainingFragment);
+            }
+        //}
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -614,3 +716,4 @@ public class jGerCtro extends javax.swing.JDialog {
     private javax.swing.JTextField jSaida;
     // End of variables declaration//GEN-END:variables
 }
+
